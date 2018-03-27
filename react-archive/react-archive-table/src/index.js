@@ -2,15 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 //import App from './App';
-import registerServiceWorker from './registerServiceWorker';
-import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
-import BootstrapTable from 'react-bootstrap-table-next';
-import axios from 'axios';
+
+
+
 import $ from 'jquery';
 import * as Table from 'reactabular-table';
 import 'picnic/picnic.css';
 import { cloneDeep, findIndex } from 'lodash';
-import * as edit from 'react-edit';
+
 import uuid from 'uuid';
 
 
