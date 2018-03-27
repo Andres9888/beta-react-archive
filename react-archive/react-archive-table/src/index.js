@@ -2,19 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 //import App from './App';
-
-
-
 import $ from 'jquery';
 import * as Table from 'reactabular-table';
 import 'picnic/picnic.css';
 import { cloneDeep, findIndex } from 'lodash';
-
 import uuid from 'uuid';
-
-
-
-
 
 const columns = [
   {
@@ -146,4 +138,4 @@ ReactDOM.render(<PersonList /> , document.getElementById('root'));
 
 
 
-registerServiceWorker();
+
