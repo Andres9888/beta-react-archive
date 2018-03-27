@@ -9,15 +9,11 @@ import axios from 'axios';
 import $ from 'jquery';
 import * as Table from 'reactabular-table';
 import 'picnic/picnic.css';
-import _ from 'lodash';
+import { cloneDeep, findIndex } from 'lodash';
+import * as edit from 'react-edit';
+import uuid from 'uuid';
 
 
-const rows = [
-  {id_page: "88730", page_short: "moga", conference_short: "cowen44", company_name: "Moog Inc.", page_archivedown: "3/24/2018 10:45:00 AM"},
-
-
-{id_page: "88417", page_short: "kss", conference_short: "icr4", company_name: "Kohl''s Corporation", page_archivedown: "3/24/2018 12:00:00 PM"}
-];
 
 
 
@@ -51,16 +47,37 @@ const columns = [
     header: {
       label: 'page_archivedown'
     }
-  }
-];
+  },
+  {
+        props: {
+          style: {
+            width: 50
+          }
+        },
+        cell: {
+          formatters: [
+            (value, { rowData }) => (
+              <span
+                className="remove"
+                
+              >
+                &#10007;
+              </span>
+            )
+            ]
+        }
+         } ];
+        
 
-export default class PersonList extends React.Component {
+
+ export default class PersonList extends React.Component {
   
 constructor(props) {
     super(props);
     this.state = {
 
-          data:[]
+          rows:[]
+           
       
 
     };
@@ -77,13 +94,13 @@ $.ajax({
     type: 'POST',
     dataType: 'json',
    
-  }).done((data) => {
+  }).done((rows) => {
 
 
 
 
   
-  this.setState({data});
+  this.setState({rows});
 
 
 })
@@ -92,8 +109,7 @@ $.ajax({
 
   }
 
-
-
+  
 
 
 
@@ -112,7 +128,9 @@ $.ajax({
 >
   <Table.Header />
  
-  <Table.Body rows={this.state.data} rowKey="id" />
+  <Table.Body rows={this.state.rows} rowKey="id" /> <td className="del-cell">
+          <input type="button" value="X" className="del-btn"/>
+        </td>
 </Table.Provider>
   
 
