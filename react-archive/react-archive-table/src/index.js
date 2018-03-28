@@ -9,11 +9,24 @@ import { cloneDeep, findIndex } from 'lodash';
 import uuid from 'uuid';
 import fontawesome from '@fortawesome/fontawesome';
 
-const columns = [
+var moment = require('moment');
+var today = moment();
+ 
+        
+
+
+ export default class PersonList extends React.Component {
+  
+constructor(props) {
+    super(props);
+    this.state = {
+
+          rows:[],
+          columns : [
   {
     property: 'id_page',
     header: {
-      label: 'ID'
+      label: '#ID'
     }
   },
   {
@@ -25,19 +38,19 @@ const columns = [
    {
     property: 'conference_short',
     header: {
-      label: 'conference_short'
+      label: 'Conference'
     }
   },
   {
     property: 'company_name',
     header: {
-      label: 'company_name'
+      label: 'Company Name'
     }
   },
   {
     property: 'page_archivedown',
     header: {
-      label: 'page_archivedown'
+      label: 'Archive Down:(Date)'
     }
   },
   {
@@ -95,11 +108,11 @@ const columns = [
           formatters: [
             (value, { rowData }) => (
               <button
-                className="success"
+                className="success">
                 
-              >View Page
-
-
+              <a href="http://wsw.com/webcast/{this.state.rows.conference_short + '/' + this.state.rows.page_short}/" target="_blank">
+View Page
+</a>
                 
               </button>
             )
@@ -113,18 +126,7 @@ const columns = [
 
 
 
-          ];
-        
-
-
- export default class PersonList extends React.Component {
-  
-constructor(props) {
-    super(props);
-    this.state = {
-
-          rows:[]
-           
+          ] 
       
 
     };
@@ -161,7 +163,29 @@ $.ajax({
 
 
   render() {
-
+  
+  var archiveDownDayFormatted = moment(this.state.rows.page_archivedown, "M/D/YYYY h:mm:ss A");
+    
+    var archiveDays = archiveDownDayFormatted.startOf('day').diff(today.startOf('day'), 'days');
+    
+    var warningcolor;
+    switch(true){
+      case (archiveDays > 0):
+        warningcolor = 'white';
+        break;
+      case (archiveDays <= 0 && archiveDays >= -5):
+        warningcolor = 'light_red';
+        break;
+      case (archiveDays <= -5 && archiveDays >= -10):
+        warningcolor = 'med_red';
+        break;
+      case (archiveDays <= -10):
+        warningcolor = 'dark_red';
+        break;
+      default:
+        warningcolor = 'inherit';
+        break;
+    }
 
 
 
@@ -171,11 +195,11 @@ $.ajax({
       
       <Table.Provider
   className="primary"
-  columns={columns}
+  columns={this.state.columns}
 >
   <Table.Header />
  
-  <Table.Body rows={this.state.rows} rowKey="id" />
+  <Table.Body style={{backgroundColor: warningcolor}} rows={this.state.rows} rowKey="id" />
 
 
    
