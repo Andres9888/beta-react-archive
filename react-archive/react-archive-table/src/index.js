@@ -7,6 +7,7 @@ import * as Table from 'reactabular-table';
 import 'picnic/picnic.css';
 import { cloneDeep, findIndex } from 'lodash';
 import uuid from 'uuid';
+import fontawesome from '@fortawesome/fontawesome';
 
 const columns = [
   {
@@ -48,16 +49,71 @@ const columns = [
         cell: {
           formatters: [
             (value, { rowData }) => (
-              <span
-                className="remove"
+              <button
+                className="warning"
                 
-              >
-                &#10007;
-              </span>
+              >Expire
+
+                
+              </button>
             )
             ]
         }
-         } ];
+
+
+         },
+         {
+        props: {
+          style: {
+            width: 50
+          }
+        },
+        cell: {
+          formatters: [
+            (value, { rowData }) => (
+              <button
+                className="error"
+                
+              >Remove
+
+
+                
+              </button>
+            )
+            ]
+        }
+
+
+         },
+         {
+        props: {
+          style: {
+            width: 50
+          }
+        },
+        cell: {
+          formatters: [
+            (value, { rowData }) => (
+              <button
+                className="success"
+                
+              >View Page
+
+
+                
+              </button>
+            )
+            ]
+        }
+
+
+         }
+
+
+
+
+
+          ];
         
 
 
@@ -119,9 +175,14 @@ $.ajax({
 >
   <Table.Header />
  
-  <Table.Body rows={this.state.rows} rowKey="id" /> <td className="del-cell">
-          <input type="button" value="X" className="del-btn"/>
-        </td>
+  <Table.Body rows={this.state.rows} rowKey="id" />
+
+
+   
+
+ 
+
+
 </Table.Provider>
   
 
@@ -134,7 +195,6 @@ $.ajax({
 
 
 ReactDOM.render(<PersonList /> , document.getElementById('root'));
-
 
 
 
