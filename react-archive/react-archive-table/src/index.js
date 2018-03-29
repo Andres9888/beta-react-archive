@@ -101,11 +101,11 @@ constructor(props) {
         },
         cell: {
           formatters: [
-            (value, { rowData }) => (
+            (value, { rowIndex }) => (
               <button
                 className="error"
                 
-               onClick={() => this.onRemove(rowData.id)} style={{ cursor: 'pointer' }}>Remove
+               onClick={() => this.onRemove(rowIndex)} style={{ cursor: 'pointer' }}>Remove
 
 
                 
@@ -245,7 +245,7 @@ onRow={(row, { rowIndex }) => {
     var warningcolor;
     switch(true){
       case (archiveDays > 0):
-        warningcolor = 'inherit';
+        warningcolor = '';
         break;
       case (archiveDays <= 0 && archiveDays >= -5):
         warningcolor = 'yellow';
@@ -257,7 +257,7 @@ onRow={(row, { rowIndex }) => {
         warningcolor = 'red';
         break;
       default:
-        warningcolor = 'inherit';
+        warningcolor = '';
         break;
     }
 
@@ -287,8 +287,11 @@ onRemove(id) {
     const rows = cloneDeep(this.state.rows);
     const idx = findIndex(rows, { id });
 
-    
-    rows.splice(idx, 1);
+
+    console.log(id);
+    console.log(idx);
+
+    rows.splice(id, 1);
 
     this.setState({ rows });
   }
