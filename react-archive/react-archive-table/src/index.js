@@ -101,11 +101,11 @@ constructor(props) {
         },
         cell: {
           formatters: [
-            (value, { rowIndex }) => (
+            (value, { rowIndex,rowData }) => (
               <button
                 className="error"
                 
-               onClick={() => this.onRemove(rowIndex)} style={{ cursor: 'pointer' }}>Remove
+               onClick={() => this.onRemove(rowIndex,rowData.id_page)} style={{ cursor: 'pointer' }}>Remove
 
 
                 
@@ -283,15 +283,33 @@ onRow={(row, { rowIndex }) => {
   
 }
 
-onRemove(id) {
+onRemove(index,id) {
     const rows = cloneDeep(this.state.rows);
     const idx = findIndex(rows, { id });
 
 
-    console.log(id);
+    console.log(index);
     console.log(idx);
+    console.log(id);
 
-    rows.splice(id, 1);
+
+$.ajax({
+    data: { action: 'expire', pages: [id] },
+    type: 'POST',
+    dataType: 'json',
+    traditional: true
+  })
+
+
+    rows.splice(index, 1);
+
+
+
+  
+
+
+
+
 
     this.setState({ rows });
   }
