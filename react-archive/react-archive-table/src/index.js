@@ -8,6 +8,7 @@ import 'picnic/picnic.css';
 import { cloneDeep, findIndex } from 'lodash';
 import uuid from 'uuid';
 import fontawesome from '@fortawesome/fontawesome';
+import * as Sticky from 'reactabular-sticky';
 
 var moment = require('moment');
 var today = moment();
@@ -19,36 +20,50 @@ var today = moment();
   
 constructor(props) {
     super(props);
+
     this.state = {
 
           rows:[],
           columns : [
   {
     property: 'id_page',
+   props: {
+      style: { minWidth: 300 }
+    },
     header: {
       label: '#ID'
     }
   },
   {
     property: 'page_short',
+    props: {
+      style: { minWidth: 300 }
+    },
     header: {
       label: 'Page_short'
     }
   },
    {
     property: 'conference_short',
+    props: {
+      style: { minWidth: 300 }
+    },
     header: {
       label: 'Conference'
     }
   },
   {
     property: 'company_name',
+    props: {
+      style: { minWidth: 300 }
+    },
     header: {
       label: 'Company Name'
     }
   },
   {
     property: 'page_archivedown',
+    
     header: {
       label: 'Archive Down:(Date)'
     }
@@ -56,7 +71,9 @@ constructor(props) {
   {
         props: {
           style: {
-            width: 50
+
+            width: 50,
+            minWidth:50
           }
         },
         cell: {
@@ -64,7 +81,7 @@ constructor(props) {
             (value, { rowData }) => (
               <button
                 className="warning"
-                
+               
               >Expire
 
                 
@@ -78,7 +95,8 @@ constructor(props) {
          {
         props: {
           style: {
-            width: 50
+            width: 50,
+            minWidth:50
           }
         },
         cell: {
@@ -87,7 +105,7 @@ constructor(props) {
               <button
                 className="error"
                 
-              >Remove
+               onClick={() => this.onRemove(rowData.id)} style={{ cursor: 'pointer' }}>Remove
 
 
                 
@@ -101,7 +119,8 @@ constructor(props) {
          {
         props: {
           style: {
-            width: 50
+            width: 50,
+            minWidth:50
           }
         },
         cell: {
@@ -118,27 +137,20 @@ View Page
             )
             ]
         }
+      }
+    ] 
+  };
+    
+    this.tableHeader = null;
+    this.tableBody = null;
+    this.onRemove = this.onRemove.bind(this);
 
-
-         }
-
-
-
-
-
-          ] 
-      
-
-    };
-  }
+}
   
 
- 
 componentDidMount() {
-
- 
-
-$.ajax({
+ this.forceUpdate();
+ $.ajax({
     data: { action: 'load'},
     type: 'POST',
     dataType: 'json',
@@ -159,11 +171,11 @@ $.ajax({
   }
 
   
-
-
-
   render() {
   
+
+ const { rows, columns } = this.state;
+
   var archiveDownDayFormatted = moment(this.state.rows.page_archivedown, "M/D/YYYY h:mm:ss A");
     
     var archiveDays = archiveDownDayFormatted.startOf('day').diff(today.startOf('day'), 'days');
@@ -174,13 +186,13 @@ $.ajax({
         warningcolor = 'white';
         break;
       case (archiveDays <= 0 && archiveDays >= -5):
-        warningcolor = 'light_red';
+        warningcolor = 'yellow';
         break;
       case (archiveDays <= -5 && archiveDays >= -10):
-        warningcolor = 'med_red';
+        warningcolor = 'orange';
         break;
       case (archiveDays <= -10):
-        warningcolor = 'dark_red';
+        warningcolor = 'red';
         break;
       default:
         warningcolor = 'inherit';
@@ -197,26 +209,52 @@ $.ajax({
   className="primary"
   columns={this.state.columns}
 >
-  <Table.Header />
+  <Sticky.Header 
+
+  style={{maxWidth:'100%',
+           position: 'fixed'             }}
+
+  ref={tableHeader => {
+            this.tableHeader = tableHeader && tableHeader.getRef();
+          }}
+
+ tableBody={this.tableBody}
+          />
  
-  <Table.Body style={{backgroundColor: warningcolor}} rows={this.state.rows} rowKey="id" />
+  <Sticky.Body 
 
+  rows={this.state.rows} 
+  style={{
+            maxWidth: '100%',
+            maxHeight: '100%'
+          }}
 
-   
+  rowKey="id" 
+ref={tableBody => {
+            this.tableBody = tableBody && tableBody.getRef();
+          }}
+          tableHeader={this.tableHeader}
 
- 
-
-
-</Table.Provider>
+  />
+  </Table.Provider>
   
 
 
       </div>
-    )
-  }
+    );
+  
 }
 
+onRemove(id) {
+    const rows = cloneDeep(this.state.rows);
+    const idx = findIndex(rows, { id });
 
+    
+    rows.splice(idx, 1);
+
+    this.setState({ rows });
+  }
+}
 
 ReactDOM.render(<PersonList /> , document.getElementById('root'));
 
