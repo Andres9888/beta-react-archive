@@ -212,7 +212,7 @@ componentDidMount() {
   <Sticky.Header 
 
   style={{maxWidth:'100%',
-           position: 'fixed'             }}
+           position: 'fixed'  }}
 
   ref={tableHeader => {
             this.tableHeader = tableHeader && tableHeader.getRef();
@@ -235,7 +235,45 @@ ref={tableBody => {
           }}
           tableHeader={this.tableHeader}
 
+
+onRow={(row, { rowIndex }) => {
+     
+  var archiveDownDayFormatted = moment(this.state.rows[rowIndex].page_archivedown, "M/D/YYYY h:mm:ss A");
+    
+    var archiveDays = archiveDownDayFormatted.startOf('day').diff(today.startOf('day'), 'days');
+    
+    var warningcolor;
+    switch(true){
+      case (archiveDays > 0):
+        warningcolor = 'inherit';
+        break;
+      case (archiveDays <= 0 && archiveDays >= -5):
+        warningcolor = 'yellow';
+        break;
+      case (archiveDays <= -5 && archiveDays >= -10):
+        warningcolor = 'orange';
+        break;
+      case (archiveDays <= -10):
+        warningcolor = 'red';
+        break;
+      default:
+        warningcolor = 'inherit';
+        break;
+    }
+
+
+
+
+      return {
+        style:{backgroundColor: warningcolor},
+      }
+
+  }
+
+}
   />
+
+
   </Table.Provider>
   
 
