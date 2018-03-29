@@ -9,7 +9,7 @@ import { cloneDeep, findIndex } from 'lodash';
 import uuid from 'uuid';
 import fontawesome from '@fortawesome/fontawesome';
 import * as Sticky from 'reactabular-sticky';
-
+import 'font-awesome/css/font-awesome.css';
 var moment = require('moment');
 var today = moment();
  
@@ -84,7 +84,10 @@ constructor(props) {
                
               >Expire
 
-                
+                <div className="icon">
+    <i className="fa fa-remove"></i>
+    
+  </div>
               </button>
             )
             ]
