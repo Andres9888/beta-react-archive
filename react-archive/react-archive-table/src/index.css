@@ -4,15 +4,19 @@ body {
   font-family: sans-serif;
 }
 
-button {
+.remove-button:hover .button-text {
+    color: transparent;
+    opacity: .9;
+}
+
+.remove-button {
   display: block;
   background-color: #c0392b;
-  width: 300px;
-  height: 100px;
+  
   line-height: 100px;
   margin: auto;
   color: #fff;
-  position: absolute;
+  position: relative;
   top: 0;
   bottom: 0;
   left: 0;
@@ -25,15 +29,15 @@ button {
   -webkit-transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4);
   transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4);
 }
-button span,
-button .icon {
+.remove-button span,
+.remove-button .icon {
   display: block;
   height: 100%;
   text-align: center;
   position: absolute;
   top: 0;
 }
-button span {
+.remove-button span {
   width: 72%;
   line-height: inherit;
   font-size: 22px;
@@ -42,7 +46,7 @@ button span {
   -webkit-transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4);
   transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4);
 }
-button span:after {
+.remove-button span:after {
   content: '';
   background-color: #a53125;
   width: 2px;
@@ -51,49 +55,49 @@ button span:after {
   top: 15%;
   right: -1px;
 }
-button .icon {
+.remove-button .icon {
   width: 28%;
   right: 0;
   -webkit-transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4);
   transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4);
 }
-button .icon .fa {
+.remove-button .icon .fa {
   font-size: 30px;
   vertical-align: middle;
   -webkit-transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4), height 0.25s ease;
   transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4), height 0.25s ease;
 }
-button .icon .fa-remove {
+.remove-button .icon .fa-remove {
   height: 36px;
 }
-button .icon .fa-check {
+.remove-button .icon .fa-check {
   display: none;
 }
-button.success span, button:hover span {
+.remove-button.success span, .remove-button:hover span {
   left: -72%;
   opacity: 0;
 }
-button.success .icon, button:hover .icon {
+.remove-button.success .icon, .remove-button:hover .icon {
   width: 100%;
 }
-button.success .icon .fa, button:hover .icon .fa {
+.remove-button.success .icon .fa, .remove-button:hover .icon .fa {
   font-size: 45px;
 }
-button.success {
+.remove-button.success {
   background-color: #27ae60;
 }
-button.success .icon .fa-remove {
+.remove-button.success .icon .fa-remove {
   display: none;
 }
-button.success .icon .fa-check {
+.remove-button.success .icon .fa-check {
   display: inline-block;
 }
-button:hover {
+.remove-button:hover {
   opacity: .9;
 }
-button:hover .icon .fa-remove {
+.remove-button:hover .icon .fa-remove {
   height: 46px;
 }
-button:active {
+.remove-button:active {
   opacity: 1;
 }

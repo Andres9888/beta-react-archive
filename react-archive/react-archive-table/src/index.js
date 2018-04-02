@@ -80,10 +80,10 @@ constructor(props) {
           formatters: [
             (value, { rowData }) => (
               <button
-                className="warning"
-               
-              >Expire
-
+                className="warning remove-button">
+               <div className="button-text">
+              Expire
+</div>
                 <div className="icon">
     <i className="fa fa-remove"></i>
     
