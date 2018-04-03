@@ -43,7 +43,7 @@ constructor(props) {
       style: { minWidth: 300 }
     },
     header: {
-      label: 'Page_short'
+      label: 'Page Short'
     }
   },
    {
@@ -65,6 +65,10 @@ constructor(props) {
     }
   },
   {
+
+
+
+
     property: 'page_archivedown',
     
     header: {
@@ -266,7 +270,7 @@ onRow={(row, { rowIndex }) => {
         warningcolor = 'orange';
         break;
       case (archiveDays <= -10):
-        warningcolor = 'red';
+        warningcolor = '#ff2b2b';
         break;
       default:
         warningcolor = '';
