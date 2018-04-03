@@ -12,6 +12,7 @@ import * as Sticky from 'reactabular-sticky';
 import 'font-awesome/css/font-awesome.css';
 import * as search from 'searchtabular-antd';
 import * as resolve from 'table-resolver';
+import * as resizable from 'reactabular-resizable';
 
 var moment = require('moment');
 var today = moment();
@@ -27,43 +28,124 @@ constructor(props) {
     this.state = {
           query: {},
           rows:[],
-          columns : [
+          columns : this.getColumns() 
+  };
+    
+    this.tableHeader = null;
+    this.tableBody = null;
+    this.onRemove = this.onRemove.bind(this);
+
+}
+  
+
+componentWillMount() {
+    this.resizableHelper = resizable.helper({
+      globalId: uuid.v4(),
+      getId: ({ property}) => property
+    });
+
+    
+    this.setState({
+      columns: this.resizableHelper.initialize(this.state.columns)
+    });
+  }
+
+
+componentDidMount() {
+ this.forceUpdate();
+ $.ajax({
+    data: { action: 'load'},
+    type: 'POST',
+    dataType: 'json',
+   
+  }).done((rows) => {
+
+
+
+
+  
+  this.setState({rows});
+
+
+})
+
+
+
+  }
+
+
+componentWillUnmount() {
+    this.resizableHelper.cleanup();
+  }
+
+  getColumns() {
+    const resizableFormatter = resizable.column({
+      onDragStart: (width, { column }) => {
+        console.log('drag start', width, column);
+      },
+      onDrag: (width, { column }) => {
+        this.resizableHelper.update({
+          column,
+          width
+        });
+      },
+      onDragEnd: (width, { column }) => {
+        console.log('drag end', width, column);
+      }
+    });
+return [
   {
     property: 'id_page',
    props: {
       style: { minWidth: 300 }
     },
     header: {
-      label: '#ID'
-    }
-  },
+      label: '#ID',
+       formatters: [
+            resizableFormatter
+          ]
+        },
+        width: 100
+      },
   {
     property: 'page_short',
     props: {
       style: { minWidth: 300 }
     },
     header: {
-      label: 'Page Short'
-    }
-  },
+      label: 'Page Short',
+      formatters: [
+            resizableFormatter
+          ]
+        },
+        width: 100
+      },
    {
     property: 'conference_short',
     props: {
       style: { minWidth: 300 }
     },
     header: {
-      label: 'Conference'
-    }
-  },
+      label: 'Conference',
+       formatters: [
+            resizableFormatter
+          ]
+        },
+        width: 100
+      },
   {
     property: 'company_name',
     props: {
       style: { minWidth: 300 }
     },
     header: {
-      label: 'Company Name'
-    }
-  },
+      label: 'Company Name',
+      formatters: [
+            resizableFormatter
+          ]
+        },
+        width: 100
+      },
   {
 
 
@@ -72,9 +154,13 @@ constructor(props) {
     property: 'page_archivedown',
     
     header: {
-      label: 'Archive Down:(Date)'
-    }
-  },
+      label: 'Archive Down:(Date)',
+      formatters: [
+            resizableFormatter
+          ]
+        },
+        width: 100
+      },
   {
         props: {
           style: {
@@ -148,37 +234,14 @@ View Page
             ]
         }
       }
-    ] 
-  };
-    
-    this.tableHeader = null;
-    this.tableBody = null;
-    this.onRemove = this.onRemove.bind(this);
-
-}
-  
-
-componentDidMount() {
- this.forceUpdate();
- $.ajax({
-    data: { action: 'load'},
-    type: 'POST',
-    dataType: 'json',
-   
-  }).done((rows) => {
-
-
-
-
-  
-  this.setState({rows});
-
-
-})
-
-
+    ]; 
 
   }
+
+getClassName(column, i) {
+    return `column-${this.id}-${i}`;
+  }
+
 
   
   render() {
@@ -222,6 +285,7 @@ componentDidMount() {
       <Table.Provider
   className="primary"
   columns={columns}
+  style={{ width: 'auto' }}
 >
 
   <Table.Header 
@@ -232,7 +296,7 @@ componentDidMount() {
     query={query}
     columns={columns}
     onChange={query=> this.setState({query})}
-
+    style={{width:'100%'}}
     />
 
      </Table.Header>
@@ -249,7 +313,8 @@ componentDidMount() {
  
 
   rowKey="id" 
-
+ 
+ onRow={this.onRow}
 
 
 onRow={(row, { rowIndex }) => {
