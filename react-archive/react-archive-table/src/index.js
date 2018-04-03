@@ -10,6 +10,9 @@ import uuid from 'uuid';
 import fontawesome from '@fortawesome/fontawesome';
 import * as Sticky from 'reactabular-sticky';
 import 'font-awesome/css/font-awesome.css';
+import * as search from 'searchtabular-antd';
+import * as resolve from 'table-resolver';
+
 var moment = require('moment');
 var today = moment();
  
@@ -22,7 +25,7 @@ constructor(props) {
     super(props);
 
     this.state = {
-
+          query: {},
           rows:[],
           columns : [
   {
@@ -177,11 +180,15 @@ componentDidMount() {
   render() {
   
 
- const { rows, columns } = this.state;
+ const { columns, query, rows } = this.state;
+ const searchedRows = search.multipleColumns({
+      columns: columns,
+      query
+    })(rows);
 
   var archiveDownDayFormatted = moment(this.state.rows.page_archivedown, "M/D/YYYY h:mm:ss A");
     
-    var archiveDays = archiveDownDayFormatted.startOf('day').diff(today.startOf('day'), 'days');
+  var archiveDays = archiveDownDayFormatted.startOf('day').diff(today.startOf('day'), 'days');
     
     var warningcolor;
     switch(true){
@@ -206,37 +213,39 @@ componentDidMount() {
 
 
     return (
-      <div>
+    
       
       <Table.Provider
   className="primary"
-  columns={this.state.columns}
+  columns={columns}
 >
-  <Sticky.Header 
 
-  style={{maxWidth:'100%',
-           position: 'fixed'  }}
+  <Table.Header 
 
-  ref={tableHeader => {
-            this.tableHeader = tableHeader && tableHeader.getRef();
-          }}
+  headerRows={resolve.headerRows({ columns })}>
+  
+  <search.Columns
+    query={query}
+    columns={columns}
+    onChange={query=> this.setState({query})}
 
- tableBody={this.tableBody}
-          />
+    />
+
+     </Table.Header>
+
+
+   
+
+    
+          
  
-  <Sticky.Body 
+  <Table.Body 
 
-  rows={this.state.rows} 
-  style={{
-            maxWidth: '100%',
-            maxHeight: '100%'
-          }}
+  rows={searchedRows} 
+ 
 
   rowKey="id" 
-ref={tableBody => {
-            this.tableBody = tableBody && tableBody.getRef();
-          }}
-          tableHeader={this.tableHeader}
+
 
 
 onRow={(row, { rowIndex }) => {
@@ -281,7 +290,7 @@ onRow={(row, { rowIndex }) => {
   
 
 
-      </div>
+      
     );
   
 }

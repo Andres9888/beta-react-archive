@@ -24,6 +24,7 @@
     "reactabular-table": "^8.12.1",
     "redux": "^3.7.2",
     "searchtabular-antd": "^1.2.0",
+    "table-resolver": "^3.2.0",
     "uuid": "^3.2.1"
   },
   "scripts": {
