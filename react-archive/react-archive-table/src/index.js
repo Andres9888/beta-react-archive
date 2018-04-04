@@ -97,7 +97,8 @@ return [
   {
     property: 'id_page',
    props: {
-      style: { minWidth: 300 }
+      style: { minWidth: 300,
+      width: "100%" }
     },
     header: {
       label: '#ID',
@@ -105,12 +106,14 @@ return [
             resizableFormatter
           ]
         },
-        width: 100
+        width: "100%"
       },
   {
     property: 'page_short',
     props: {
-      style: { minWidth: 300 }
+      style: { minWidth: 300,
+        width: "100%",
+      textTransform: 'uppercase' }
     },
     header: {
       label: 'Page Short',
@@ -118,12 +121,15 @@ return [
             resizableFormatter
           ]
         },
-        width: 100
+        width: "100%"
       },
    {
     property: 'conference_short',
     props: {
-      style: { minWidth: 300 }
+      style: { minWidth: 300,
+        width: "100%",
+      textTransform: 'uppercase',
+       }
     },
     header: {
       label: 'Conference',
@@ -131,12 +137,13 @@ return [
             resizableFormatter
           ]
         },
-        width: 100
+        width: "100%"
       },
   {
     property: 'company_name',
     props: {
-      style: { minWidth: 300 }
+      style: { minWidth: 300,
+      width: "100%" }
     },
     header: {
       label: 'Company Name',
@@ -144,7 +151,7 @@ return [
             resizableFormatter
           ]
         },
-        width: 100
+        width: "100%"
       },
   {
 
@@ -159,7 +166,7 @@ return [
             resizableFormatter
           ]
         },
-        width: 100
+        width: "100%"
       },
   {
         props: {
@@ -288,7 +295,7 @@ getClassName(column, i) {
   style={{ width: 'auto' }}
 >
 
-  <Table.Header 
+  <Table.Header style={{textTransform: "none !important"}}
 
   headerRows={resolve.headerRows({ columns })}>
   
@@ -296,7 +303,7 @@ getClassName(column, i) {
     query={query}
     columns={columns}
     onChange={query=> this.setState({query})}
-    style={{width:'100%'}}
+    style={"width:100%"}
     />
 
      </Table.Header>
