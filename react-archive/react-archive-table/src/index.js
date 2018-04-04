@@ -225,9 +225,9 @@ return [
               <button
                 className="success">
                 
-              <a href="http://wsw.com/webcast/{this.state.rows.conference_short + '/' + this.state.rows.page_short}/" target="_blank">
-View Page
-</a>
+    <a href={"http://wsw.com/webcast/" + rowData.conference_short + '/' + rowData.page_short} target="_blank">
+        View Page
+    </a>
                 
               </button>
             )
