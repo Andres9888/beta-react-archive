@@ -106,7 +106,11 @@ return [
             resizableFormatter
           ]
         },
+         cell: {
+                formatters: [search.highlightCell]
+              },
         width: "100%"
+
       },
   {
     property: 'page_short',
@@ -157,35 +161,30 @@ return [
 
   {
 
-
+  property: 'page_archivedown',
     header: {
       label: 'Archive Down:(Day)',
       formatters: [
             resizableFormatter
           ]
         },
-        width: "100%"
-      },
-  {
-        props: {
-          style: {
-
-            width: 50,
-            minWidth:50
-          }
-        },
         cell: {
+          
           formatters: [
             (value, { rowData }) => (
-             <div>
+               
+           <div>
               {moment(rowData.page_archivedown, "M/D/YYYY h:mm:ss A").startOf('day').diff(today.startOf('day'), 'days')}
              </div>
             )
             ]
         }
+      },
+  
+      
 
 
-         },
+         
 
 {
 
