@@ -4,6 +4,15 @@ body {
   font-family: sans-serif;
 }
 
+td input{
+
+
+	width:100%
+}
+
+thead{border-bottom-style: inset;}
+
+
 .remove-button:hover .button-text {
     color: transparent;
     opacity: .9;
