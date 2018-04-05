@@ -164,6 +164,7 @@ return [
   property: 'page_archivedown',
     header: {
       label: 'Archive Down:(Day)',
+      name: "archivedays",
       formatters: [
             resizableFormatter
           ]
@@ -321,8 +322,8 @@ getClassName(column, i) {
 
 
     return (
-    
-      
+    <div>
+      <h1>{this.state.rows.length} </h1>
       <Table.Provider
   className="primary"
   columns={columns}
@@ -346,7 +347,7 @@ getClassName(column, i) {
    
 
     
-          
+     <h1>{searchedRows.length}</h1>     
  
   <Table.Body 
 
@@ -398,7 +399,7 @@ onRow={(row, { rowIndex }) => {
 
   </Table.Provider>
   
-
+</div>
 
       
     );
