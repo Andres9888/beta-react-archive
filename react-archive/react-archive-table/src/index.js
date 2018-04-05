@@ -153,15 +153,47 @@ return [
         },
         width: "100%"
       },
+  
+
   {
 
 
+    header: {
+      label: 'Archive Down:(Day)',
+      formatters: [
+            resizableFormatter
+          ]
+        },
+        width: "100%"
+      },
+  {
+        props: {
+          style: {
+
+            width: 50,
+            minWidth:50
+          }
+        },
+        cell: {
+          formatters: [
+            (value, { rowData }) => (
+             <div>
+              {moment(rowData.page_archivedown, "M/D/YYYY h:mm:ss A").startOf('day').diff(today.startOf('day'), 'days')}
+             </div>
+            )
+            ]
+        }
+
+
+         },
+
+{
 
 
     property: 'page_archivedown',
     
     header: {
-      label: 'Archive Down:(Date)',
+      label: '(Date)',
       formatters: [
             resizableFormatter
           ]
@@ -260,6 +292,9 @@ getClassName(column, i) {
       query
     })(rows);
 
+
+
+
   var archiveDownDayFormatted = moment(this.state.rows.page_archivedown, "M/D/YYYY h:mm:ss A");
     
   var archiveDays = archiveDownDayFormatted.startOf('day').diff(today.startOf('day'), 'days');
@@ -295,7 +330,7 @@ getClassName(column, i) {
   style={{ width: 'auto' }}
 >
 
-  <Table.Header style={{textTransform: "none !important"}}
+  <Table.Header 
 
   headerRows={resolve.headerRows({ columns })}>
   
