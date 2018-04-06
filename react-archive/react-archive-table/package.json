@@ -9,6 +9,7 @@
     "ajv-keywords": "^3.1.0",
     "axios": "^0.18.0",
     "build": "^0.1.4",
+    "classnames": "^2.2.5",
     "feather-icons": "^4.7.0",
     "font-awesome": "^4.7.0",
     "jquery": "^3.3.1",
@@ -25,6 +26,7 @@
     "reactabular-table": "^8.12.1",
     "redux": "^3.7.2",
     "searchtabular-antd": "^1.2.0",
+    "selectabular": "^2.1.0",
     "table-resolver": "^3.2.0",
     "uuid": "^3.2.1"
   },

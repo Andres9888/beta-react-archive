@@ -13,6 +13,9 @@ import 'font-awesome/css/font-awesome.css';
 import * as search from 'searchtabular-antd';
 import * as resolve from 'table-resolver';
 import * as resizable from 'reactabular-resizable';
+import * as select from 'selectabular';
+import { compose } from 'redux';
+import classnames from 'classnames';
 
 var moment = require('moment');
 var today = moment();
@@ -28,12 +31,17 @@ constructor(props) {
     this.state = {
           query: {},
           rows:[],
-          columns : this.getColumns() 
+          columns : this.getColumns(), 
+          selectedRows: []
   };
     
     this.tableHeader = null;
     this.tableBody = null;
     this.onRemove = this.onRemove.bind(this);
+
+    this.onRow = this.onRow.bind(this);
+    this.onSelectRow = this.onSelectRow.bind(this);
+    this.getSelectedRowIndex = this.getSelectedRowIndex.bind(this);
 
 }
   
@@ -286,7 +294,8 @@ getClassName(column, i) {
   render() {
   
 
- const { columns, query, rows } = this.state;
+ const { columns, query, rows, selectedRows } = this.state;
+const selectedRowIndex = this.getSelectedRowIndex(selectedRows);
  const searchedRows = search.multipleColumns({
       columns: columns,
       query
@@ -321,7 +330,11 @@ getClassName(column, i) {
 
 
 
-    return (
+    return select.byArrowKeys({
+      rows,
+      selectedRowIndex,
+      onSelectRow: this.onSelectRow
+    })(
     <div>
       <h1>{this.state.rows.length} </h1>
       <Table.Provider
@@ -395,7 +408,12 @@ onRow={(row, { rowIndex }) => {
 
 }
   />
-
+<tfoot>
+            <tr>
+              <td>Selected: {selectedRows[0] && selectedRows[0].id_page}</td>
+              <td>Select Length{selectedRows.length}</td>
+            </tr>
+          </tfoot>
 
   </Table.Provider>
   
@@ -405,6 +423,35 @@ onRow={(row, { rowIndex }) => {
     );
   
 }
+
+onRow(row, { rowIndex }) {
+    return {
+      className: classnames(
+        
+        row.selected && 'selected-row'
+      ),
+      onClick: () => this.onSelectRow(rowIndex)
+    };
+  }
+
+ onSelectRow(selectedRowIndex) {
+    const { rows } = this.state;
+    const selectedRowId = rows[selectedRowIndex].id_page;
+
+    this.setState(
+      compose(
+        select.rows(row => row.id_page === selectedRowId),
+        select.none
+      )(rows)
+    );
+  }
+
+   getSelectedRowIndex(selectedRows) {
+    return findIndex(this.state.rows, {
+      id: selectedRows[0] && selectedRows[0].id_page
+    });
+  }
+
 
 onRemove(index,id) {
     const rows = cloneDeep(this.state.rows);
