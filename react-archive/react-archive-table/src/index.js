@@ -1,7 +1,8 @@
+//import App from './App';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-//import App from './App';
 import $ from 'jquery';
 import * as Table from 'reactabular-table';
 import 'picnic/picnic.css';
@@ -20,10 +21,7 @@ import classnames from 'classnames';
 var moment = require('moment');
 var today = moment();
  
-        
-
-
- export default class PersonList extends React.Component {
+export default class PersonList extends React.Component {
   
 constructor(props) {
     super(props);
@@ -31,77 +29,8 @@ constructor(props) {
     this.state = {
           query: {},
           rows:[],
-          columns : this.getColumns(), 
-          selectedRows: []
-  };
-    
-    this.tableHeader = null;
-    this.tableBody = null;
-    this.onRemove = this.onRemove.bind(this);
-
-    this.onRow = this.onRow.bind(this);
-    this.onSelectRow = this.onSelectRow.bind(this);
-    this.getSelectedRowIndex = this.getSelectedRowIndex.bind(this);
-
-}
-  
-
-componentWillMount() {
-    this.resizableHelper = resizable.helper({
-      globalId: uuid.v4(),
-      getId: ({ property}) => property
-    });
-
-    
-    this.setState({
-      columns: this.resizableHelper.initialize(this.state.columns)
-    });
-  }
-
-
-componentDidMount() {
- this.forceUpdate();
- $.ajax({
-    data: { action: 'load'},
-    type: 'POST',
-    dataType: 'json',
-   
-  }).done((rows) => {
-
-
-
-
-  
-  this.setState({rows});
-
-
-})
-
-
-
-  }
-
-
-componentWillUnmount() {
-    this.resizableHelper.cleanup();
-  }
-
-  getColumns() {
-    const resizableFormatter = resizable.column({
-      onDragStart: (width, { column }) => {
-        console.log('drag start', width, column);
-      },
-      onDrag: (width, { column }) => {
-        this.resizableHelper.update({
-          column,
-          width
-        });
-      },
-      onDragEnd: (width, { column }) => {
-        console.log('drag end', width, column);
-      }
-    });
-return [
+          selectedRows: [],
+          columns : [
   {
     property: 'id_page',
    props: {
@@ -111,7 +40,7 @@ return [
     header: {
       label: '#ID',
        formatters: [
-            resizableFormatter
+            
           ]
         },
          cell: {
@@ -130,7 +59,7 @@ return [
     header: {
       label: 'Page Short',
       formatters: [
-            resizableFormatter
+            
           ]
         },
         width: "100%"
@@ -146,7 +75,7 @@ return [
     header: {
       label: 'Conference',
        formatters: [
-            resizableFormatter
+            
           ]
         },
         width: "100%"
@@ -160,13 +89,12 @@ return [
     header: {
       label: 'Company Name',
       formatters: [
-            resizableFormatter
+            
           ]
         },
         width: "100%"
       },
   
-
   {
 
   property: 'page_archivedown',
@@ -174,7 +102,7 @@ return [
       label: 'Archive Down:(Day)',
       name: "archivedays",
       formatters: [
-            resizableFormatter
+            
           ]
         },
         cell: {
@@ -190,11 +118,6 @@ return [
         }
       },
   
-      
-
-
-         
-
 {
 
 
@@ -203,7 +126,7 @@ return [
     header: {
       label: '(Date)',
       formatters: [
-            resizableFormatter
+            
           ]
         },
         width: "100%"
@@ -281,9 +204,45 @@ return [
             ]
         }
       }
-    ]; 
+    ]
+          
+  }
+    
+    this.tableHeader = null;
+    this.tableBody = null;
+
+
+    this.onRemove = this.onRemove.bind(this);
+
+    this.onRow = this.onRow.bind(this);
+
+    this.onSelectRow = this.onSelectRow.bind(this);
+    this.getSelectedRowIndex = this.getSelectedRowIndex.bind(this);
+
+}
+  
+
+
+
+
+componentDidMount() {
+ this.forceUpdate();
+ 
+
+ $.ajax({
+    data: { action: 'load'},
+    type: 'POST',
+    dataType: 'json',
+   
+  }).done((rows) => {
+  
+  this.setState({rows});
+
+})
 
   }
+
+
 
 getClassName(column, i) {
     return `column-${this.id}-${i}`;
@@ -295,7 +254,7 @@ getClassName(column, i) {
   
 
  const { columns, query, rows, selectedRows } = this.state;
-const selectedRowIndex = this.getSelectedRowIndex(selectedRows);
+ const selectedRowIndex = this.getSelectedRowIndex(selectedRows);
  const searchedRows = search.multipleColumns({
       columns: columns,
       query
@@ -424,11 +383,11 @@ onRow={(row, { rowIndex }) => {
   
 }
 
-onRow(row, { rowIndex }) {
+onRow(searchedRows, { rowIndex }) {
     return {
       className: classnames(
-        
-        row.selected && 'selected-row'
+        rowIndex % 2 ? 'odd-row' : 'even-row',
+        searchedRows.selected && 'selected-row'
       ),
       onClick: () => this.onSelectRow(rowIndex)
     };
