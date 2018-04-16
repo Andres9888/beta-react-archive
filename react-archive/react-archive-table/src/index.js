@@ -10,7 +10,7 @@ import { cloneDeep, findIndex } from 'lodash';
 import uuid from 'uuid';
 import fontawesome from '@fortawesome/fontawesome';
 import * as Sticky from 'reactabular-sticky';
-import 'font-awesome/css/font-awesome.css';
+
 import * as search from 'searchtabular-antd';
 import * as resolve from 'table-resolver';
 import * as resizable from 'reactabular-resizable';
@@ -27,14 +27,15 @@ constructor(props) {
     super(props);
 
     this.state = {
-          query: {},
+          
           rows:[],
           selectedRows: [],
+          
           columns : [
   {
     property: 'id_page',
    props: {
-      style: { minWidth: 300,
+      style: {
       width: "100%" }
     },
     header: {
@@ -43,9 +44,7 @@ constructor(props) {
             
           ]
         },
-         cell: {
-                formatters: [search.highlightCell]
-              },
+         
         width: "100%"
 
       },
@@ -67,7 +66,7 @@ constructor(props) {
    {
     property: 'conference_short',
     props: {
-      style: { minWidth: 300,
+      style: { 
         width: "100%",
       textTransform: 'uppercase',
        }
@@ -120,7 +119,6 @@ constructor(props) {
   
 {
 
-
     property: 'page_archivedown',
     
     header: {
@@ -146,7 +144,7 @@ constructor(props) {
                 className="warning remove-button">
                <div className="button-text">
               Expire
-</div>
+              </div>
                 <div className="icon">
     <i className="fa fa-remove"></i>
     
@@ -206,11 +204,8 @@ constructor(props) {
       }
     ]
           
-  }
+  };
     
-    this.tableHeader = null;
-    this.tableBody = null;
-
 
     this.onRemove = this.onRemove.bind(this);
 
@@ -222,13 +217,8 @@ constructor(props) {
 }
   
 
-
-
-
 componentDidMount() {
- this.forceUpdate();
  
-
  $.ajax({
     data: { action: 'load'},
     type: 'POST',
@@ -243,131 +233,46 @@ componentDidMount() {
   }
 
 
-
-getClassName(column, i) {
-    return `column-${this.id}-${i}`;
-  }
-
-
-  
   render() {
   
 
- const { columns, query, rows, selectedRows } = this.state;
+ const { columns, rows, selectedRows } = this.state;
  const selectedRowIndex = this.getSelectedRowIndex(selectedRows);
- const searchedRows = search.multipleColumns({
-      columns: columns,
-      query
-    })(rows);
-
-
-
-
-  var archiveDownDayFormatted = moment(this.state.rows.page_archivedown, "M/D/YYYY h:mm:ss A");
+ 
     
-  var archiveDays = archiveDownDayFormatted.startOf('day').diff(today.startOf('day'), 'days');
-    
-    var warningcolor;
-    switch(true){
-      case (archiveDays > 0):
-        warningcolor = 'white';
-        break;
-      case (archiveDays <= 0 && archiveDays >= -5):
-        warningcolor = 'yellow';
-        break;
-      case (archiveDays <= -5 && archiveDays >= -10):
-        warningcolor = 'orange';
-        break;
-      case (archiveDays <= -10):
-        warningcolor = 'red';
-        break;
-      default:
-        warningcolor = 'inherit';
-        break;
-    }
-
-
-
 
     return select.byArrowKeys({
       rows,
       selectedRowIndex,
       onSelectRow: this.onSelectRow
     })(
+    
+
     <div>
       <h1>{this.state.rows.length} </h1>
+      
       <Table.Provider
   className="primary"
   columns={columns}
-  style={{ width: 'auto' }}
->
+  >
 
-  <Table.Header 
+  <Table.Header />
 
-  headerRows={resolve.headerRows({ columns })}>
-  
-  <search.Columns
-    query={query}
-    columns={columns}
-    onChange={query=> this.setState({query})}
-    style={"width:100%"}
-    />
-
-     </Table.Header>
-
-
-   
-
-    
-     <h1>{searchedRows.length}</h1>     
+     <h1>{selectedRows.length}</h1>     
  
   <Table.Body 
 
-  rows={searchedRows} 
+  rows={rows} 
  
-
-  rowKey="id" 
+  rowKey="id_page" 
  
  onRow={this.onRow}
 
 
-onRow={(row, { rowIndex }) => {
-     
-  var archiveDownDayFormatted = moment(this.state.rows[rowIndex].page_archivedown, "M/D/YYYY h:mm:ss A");
-    
-    var archiveDays = archiveDownDayFormatted.startOf('day').diff(today.startOf('day'), 'days');
-    
-    var warningcolor;
-    switch(true){
-      case (archiveDays > 0):
-        warningcolor = '';
-        break;
-      case (archiveDays <= 0 && archiveDays >= -5):
-        warningcolor = 'yellow';
-        break;
-      case (archiveDays <= -5 && archiveDays >= -10):
-        warningcolor = 'orange';
-        break;
-      case (archiveDays <= -10):
-        warningcolor = '#ff2b2b';
-        break;
-      default:
-        warningcolor = '';
-        break;
-    }
 
 
-
-
-      return {
-        style:{backgroundColor: warningcolor},
-      }
-
-  }
-
-}
   />
-<tfoot>
+          <tfoot>
             <tr>
               <td>Selected: {selectedRows[0] && selectedRows[0].id_page}</td>
               <td>Select Length{selectedRows.length}</td>
@@ -383,11 +288,11 @@ onRow={(row, { rowIndex }) => {
   
 }
 
-onRow(searchedRows, { rowIndex }) {
+onRow(row, { rowIndex }) {
     return {
       className: classnames(
         rowIndex % 2 ? 'odd-row' : 'even-row',
-        searchedRows.selected && 'selected-row'
+        row.selected && 'selected-row'
       ),
       onClick: () => this.onSelectRow(rowIndex)
     };
@@ -431,12 +336,6 @@ $.ajax({
 
 
     rows.splice(index, 1);
-
-
-
-  
-
-
 
 
 
