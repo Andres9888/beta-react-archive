@@ -233,13 +233,39 @@ componentDidMount() {
   }
 
 
+
+all = () => {
+    this.setState(compose(select.this.state.rows(row => row), select.all)(this.state.rows));
+
+    console.log(this.state.rows, this);
+  };
+
   render() {
   
 
  const { columns, rows, selectedRows } = this.state;
  const selectedRowIndex = this.getSelectedRowIndex(selectedRows);
  
+var filtered = rows.filter((x, i, arr) => {
+      return x.selected && x.id_page;
+    });
+
+    var buttonStyle = {
+      margin: "10px 10px 10px 0"
+    };
+
+    var newfiltered = [];
+
+    for (var key in filtered) {
+      if (filtered.hasOwnProperty(key)) {
+        newfiltered.push(filtered[key]["id_page"]);
+      }
+    }
     
+
+
+
+
 
     return select.byArrowKeys({
       rows,
@@ -256,7 +282,14 @@ componentDidMount() {
   columns={columns}
   >
 
-  <Table.Header />
+  <Table.Header
+
+style={{
+              backgroundImage:
+                "url(https://www.transparenttextures.com/patterns/cubes.png)",
+              backgroundRepeat: "repeat"
+            }}
+   />
 
      <h1>{selectedRows.length}</h1>     
  
@@ -276,7 +309,14 @@ componentDidMount() {
             <tr>
               <td>Selected: {selectedRows[0] && selectedRows[0].id_page}</td>
               <td>Select Length{selectedRows.length}</td>
+              <td>Select Length:{console.log(newfiltered)}</td>
             </tr>
+
+             <button
+                className="btn btn-default"
+                style={buttonStyle}
+                onClick={this.all}
+              />
           </tfoot>
 
   </Table.Provider>
