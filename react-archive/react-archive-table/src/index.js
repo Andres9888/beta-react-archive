@@ -233,13 +233,6 @@ componentDidMount() {
   }
 
 
-
-all = () => {
-    this.setState(compose(select.this.state.rows(row => row), select.all)(this.state.rows));
-
-    console.log(this.state.rows, this);
-  };
-
   render() {
   
 
@@ -315,7 +308,13 @@ style={{
              <button
                 className="btn btn-default"
                 style={buttonStyle}
-                onClick={this.all}
+                onClick={() => {
+
+
+                  this.setState(compose(select.rows(row => row), select.all)(rows))
+
+                  
+                }}
               />
           </tfoot>
 
