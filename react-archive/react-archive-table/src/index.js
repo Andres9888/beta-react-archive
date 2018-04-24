@@ -169,7 +169,7 @@ constructor(props) {
               <button
                 className="error"
                 
-               onClick={() => this.onRemove(rowIndex,rowData.id_page)} style={{ cursor: 'pointer' }}>Remove
+               onClick={() => this.onExpire(rowIndex,rowData.id_page)} style={{ cursor: 'pointer' }}>Remove
 
 
                 
@@ -208,6 +208,10 @@ constructor(props) {
     
 
     this.onRemove = this.onRemove.bind(this);
+    this.onRemoveAll = this.onRemove.bind(this);
+
+    this.onExpire = this.onRemove.bind(this);
+    this.onExpireAll = this.onRemove.bind(this);
 
     this.onRow = this.onRow.bind(this);
 
@@ -243,9 +247,13 @@ var filtered = rows.filter((x, i, arr) => {
       return x.selected && x.id_page;
     });
 
-    var buttonStyle = {
-      margin: "10px 10px 10px 0"
-    };
+var filteredTimeRow = rows.filter((x, i, arr) => {
+      return moment(x.page_archivedown, "M/D/YYYY h:mm:ss A").startOf('day').diff(today.startOf('day'), 'days') < 0
+
+       && x.id_page;
+    });
+
+   
 
     var newfiltered = [];
 
@@ -254,9 +262,20 @@ var filtered = rows.filter((x, i, arr) => {
         newfiltered.push(filtered[key]["id_page"]);
       }
     }
-    
+
+    var filteredAllExpiredID = [];
+
+    for (var key in filteredTimeRow) {
+      if (filteredTimeRow.hasOwnProperty(key)) {
+        filteredAllExpiredID.push(filteredTimeRow[key]["id_page"]);
+      }
+    }
 
 
+
+var buttonStyle = {
+      margin: "10px 10px 10px 0"
+    };
 
 
 
@@ -302,7 +321,7 @@ style={{
             <tr>
               <td>Selected: {selectedRows[0] && selectedRows[0].id_page}</td>
               <td>Select Length{selectedRows.length}</td>
-              <td>Select Length:{console.log(newfiltered)}</td>
+              <td>Select Length:{console.log(filteredAllExpiredID)}</td>
             </tr>
 
              <button
@@ -356,7 +375,7 @@ onRow(row, { rowIndex }) {
   }
 
 
-onRemove(index,id) {
+onExpire(index,id) {
     const rows = cloneDeep(this.state.rows);
     const idx = findIndex(rows, { id });
 
@@ -380,6 +399,32 @@ $.ajax({
 
     this.setState({ rows });
   }
+
+onExpireAll(index,id) {
+    const rows = cloneDeep(this.state.rows);
+    const idx = findIndex(rows, { id });
+
+
+    console.log(index);
+    console.log(idx);
+    console.log(id);
+
+
+$.ajax({
+    data: { action: 'expire', pages: filteredAllExpiredID },
+    type: 'POST',
+    dataType: 'json',
+    traditional: true
+  })
+
+
+    rows.splice(index, 1);
+
+
+
+    this.setState({ rows });
+  }
+
 }
 
 ReactDOM.render(<PersonList /> , document.getElementById('root'));
