@@ -210,8 +210,8 @@ constructor(props) {
     this.onRemove = this.onRemove.bind(this);
     this.onRemoveAll = this.onRemove.bind(this);
 
-    this.onExpire = this.onRemove.bind(this);
-    this.onExpireAll = this.onRemove.bind(this);
+    this.onExpire = this.onExpire.bind(this);
+    this.onExpireAll = this.onExpireAll.bind(this);
 
     this.onRow = this.onRow.bind(this);
 
@@ -287,7 +287,7 @@ var buttonStyle = {
     
 
     <div>
-      <h1>{this.state.rows.length} </h1>
+      
       
       <Table.Provider
   className="primary"
@@ -303,7 +303,7 @@ style={{
             }}
    />
 
-     <h1>{selectedRows.length}</h1>     
+     
  
   <Table.Body 
 
@@ -313,15 +313,14 @@ style={{
  
  onRow={this.onRow}
 
-
-
-
   />
           <tfoot>
             <tr>
               <td>Selected: {selectedRows[0] && selectedRows[0].id_page}</td>
               <td>Select Length{selectedRows.length}</td>
               <td>Select Length:{console.log(filteredAllExpiredID)}</td>
+               <h1>{selectedRows.length}</h1>  
+               <h1>{this.state.rows.length} </h1>  
             </tr>
 
              <button
@@ -334,7 +333,15 @@ style={{
 
                   
                 }}
-              />
+              >Select All</button>
+              <button
+                className="btn btn-default"
+                style={buttonStyle}
+                onClick={
+
+                 this.onExpireAll 
+                }
+              >Expire All</button>
           </tfoot>
 
   </Table.Provider>
@@ -401,6 +408,39 @@ $.ajax({
   }
 
 onExpireAll(index,id) {
+    
+
+
+    const rows = cloneDeep(this.state.rows);
+    const idx = findIndex(rows, { id });
+
+
+    var filteredTimeRow2 = rows.filter((x, i, arr) => {
+      return moment(x.page_archivedown, "M/D/YYYY h:mm:ss A").startOf('day').diff(today.startOf('day'), 'days') < 0
+
+       && x.id_page;
+    });
+  var filteredAllExpiredID2 = [];
+
+    for (var key in filteredTimeRow2) {
+      if (filteredTimeRow2.hasOwnProperty(key)) {
+        filteredAllExpiredID2.push(filteredTimeRow2[key]["id_page"]);
+      }
+    }
+
+
+    console.log(index);
+    console.log(idx);
+    console.log(id);
+    console.log(filteredTimeRow2);
+    console.log(filteredAllExpiredID2);
+  
+
+  }
+
+
+
+onRemove(index,id) {
     const rows = cloneDeep(this.state.rows);
     const idx = findIndex(rows, { id });
 
@@ -411,7 +451,32 @@ onExpireAll(index,id) {
 
 
 $.ajax({
-    data: { action: 'expire', pages: filteredAllExpiredID },
+    data: { action: 'remove', pages: [id] },
+    type: 'POST',
+    dataType: 'json',
+    traditional: true
+  })
+
+
+    rows.splice(index, 1);
+
+
+
+    this.setState({ rows });
+  }
+onRemoveAll(index,id) {
+    
+    const rows = cloneDeep(this.state.rows);
+    const idx = findIndex(rows, { id });
+
+
+    console.log(index);
+    console.log(idx);
+    console.log(id);
+
+
+$.ajax({
+    data: { action: 'remove', pages: [id] },
     type: 'POST',
     dataType: 'json',
     traditional: true
