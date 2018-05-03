@@ -36,7 +36,8 @@ constructor(props) {
     property: 'id_page',
    props: {
       style: {
-      width: "100%" }
+      width: "100%",
+      textAlign: "right"}
     },
     header: {
       label: '#ID',
@@ -97,6 +98,11 @@ constructor(props) {
   {
 
   property: 'page_archivedown',
+   props: {
+      style: {
+      width: "100%",
+      textAlign: "right"}
+    },
     header: {
       label: 'Archive Down:(Day)',
       name: "archivedays",
@@ -120,6 +126,11 @@ constructor(props) {
 {
 
     property: 'page_archivedown',
+     props: {
+      style: {
+      width: "100%",
+      textAlign: "right"}
+    },
     
     header: {
       label: '(Date)',
@@ -130,6 +141,28 @@ constructor(props) {
         width: "100%"
       },
   {
+
+ header: {
+      label: 'box',
+      formatters: [
+            
+name => (
+                <button onClick={this.onExpireAll}
+                    style={{ width: '20px',background:"red" }}>
+                  
+                    
+                    
+                 
+                  
+                </button>
+              )
+
+
+
+          ]
+
+
+},
         props: {
           style: {
 
@@ -208,7 +241,7 @@ constructor(props) {
     
 
     this.onRemove = this.onRemove.bind(this);
-    this.onRemoveAll = this.onRemove.bind(this);
+    this.onRemoveAll = this.onRemoveAll.bind(this);
 
     this.onExpire = this.onExpire.bind(this);
     this.onExpireAll = this.onExpireAll.bind(this);
@@ -311,7 +344,7 @@ style={{
  
   rowKey="id_page" 
  
- onRow={this.onRow}
+  onRow={this.onRow}
 
   />
           <tfoot>
