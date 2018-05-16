@@ -325,6 +325,15 @@ export default class PersonList extends React.Component {
             margin: "10px 10px 10px 0"
         };
 
+        var FooterStyle = {
+            height: "122px",
+    borderTop: "unset",
+    width: "100%",
+    background: "#0074d975",
+    position: "fixed",
+    top: "95%"
+        };
+
 
 
         return select.byArrowKeys({
@@ -365,16 +374,15 @@ export default class PersonList extends React.Component {
             onRow = { this.onRow }
 
             /> <
-            tfoot >
-            <
-            tr >
-            <
-            td > Selected: { selectedRows[0] && selectedRows[0].id_page } < /td> <
-            td > Select Length { selectedRows.length } < /td> <
-            td > Select Length: { filteredAllExpiredID.length } < /td> <
-            h1 > { selectedRows.length } < /h1>   <
-            h1 > { this.state.rows.length } < /h1>   <
-            /tr>
+            tfoot style={
+  FooterStyle} >
+            
+             Selected1: { selectedRows[0] && selectedRows[0].id_page } 
+             Select Length { selectedRows.length } 
+             Pages to Expire: { filteredAllExpiredID.length } 
+             { selectedRows.length } 
+             Total Pages: { this.state.rows.length }    
+           
 
             <
             button className = "btn btn-default"
