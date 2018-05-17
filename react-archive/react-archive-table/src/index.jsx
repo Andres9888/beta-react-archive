@@ -21,7 +21,7 @@ import classnames from 'classnames';
 var moment = require('moment');
 var today = moment();
 
-export default class PersonList extends React.Component {
+class PersonList extends React.Component {
 
     constructor(props) {
         super(props);
@@ -325,15 +325,7 @@ export default class PersonList extends React.Component {
             margin: "10px 10px 10px 0"
         };
 
-        var FooterStyle = {
-            height: "122px",
-    borderTop: "unset",
-    width: "100%",
-    background: "#0074d975",
-    position: "fixed",
-    top: "95%"
-        };
-
+       
 
 
         return select.byArrowKeys({
@@ -374,8 +366,7 @@ export default class PersonList extends React.Component {
             onRow = { this.onRow }
 
             /> <
-            tfoot style={
-  FooterStyle} >
+            tfoot  >
             
              Selected1: { selectedRows[0] && selectedRows[0].id_page } 
              Select Length { selectedRows.length } 
@@ -425,6 +416,7 @@ export default class PersonList extends React.Component {
         );
 
     }
+  
 
     onRow(row, { rowIndex }) {
         return {

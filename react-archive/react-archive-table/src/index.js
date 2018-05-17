@@ -21,7 +21,7 @@ import classnames from 'classnames';
 var moment = require('moment');
 var today = moment();
 
-export default class PersonList extends React.Component {
+class PersonList extends React.Component {
 
     constructor(props) {
         super(props);
@@ -325,6 +325,7 @@ export default class PersonList extends React.Component {
             margin: "10px 10px 10px 0"
         };
 
+       
 
 
         return select.byArrowKeys({
@@ -365,16 +366,16 @@ export default class PersonList extends React.Component {
             onRow = { this.onRow }
 
             /> <
-            tfoot >
-            <
-            tr >
-            <
-            td > Selected: { selectedRows[0] && selectedRows[0].id_page } < /td> <
-            td > Select Length { selectedRows.length } < /td> <
-            td > Select Length: { filteredAllExpiredID.length } < /td> <
-            h1 > { selectedRows.length } < /h1>   <
-            h1 > { this.state.rows.length } < /h1>   <
-            /tr>
+            tfoot  >
+            
+            Total Pages: { this.state.rows.length }
+
+            Pages to Expire: { filteredAllExpiredID.length } 
+             
+             
+            Selected{newfiltered.length  }
+             {console.log(newfiltered)}        
+           
 
             <
             button className = "btn btn-default"
@@ -404,7 +405,34 @@ export default class PersonList extends React.Component {
 
                 this.onExpireAll
             } >
-            Expire All < /button> <
+            Expire All < /button>
+
+             <
+            button className = "btn btn-default"
+            style = { buttonStyle } onClick = {
+                () => {
+
+
+                    this.setState(compose(select.rows(row => row), select.all)(rows))
+
+
+                }
+            } >
+            Expire Selected < /button> <
+            button className = "btn btn-default"
+            style = { buttonStyle } onClick = {
+                () => {
+
+
+                    this.setState(compose(select.rows(row => !row), select.none)(rows))
+
+
+                }
+            } >
+
+
+
+             <
             /tfoot>
 
             <
@@ -417,6 +445,7 @@ export default class PersonList extends React.Component {
         );
 
     }
+  
 
     onRow(row, { rowIndex }) {
         return {
