@@ -3,17 +3,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+
 import $ from 'jquery';
 import * as Table from 'reactabular-table';
 import 'picnic/picnic.css';
 import { cloneDeep, findIndex } from 'lodash';
-import uuid from 'uuid';
-import fontawesome from '@fortawesome/fontawesome';
-import * as Sticky from 'reactabular-sticky';
 
-import * as search from 'searchtabular-antd';
-import * as resolve from 'table-resolver';
-import * as resizable from 'reactabular-resizable';
+
+
+
 import * as select from 'selectabular';
 import { compose } from 'redux';
 import classnames from 'classnames';
@@ -155,7 +153,7 @@ class PersonList extends React.Component {
                         formatters: [
 
                             name => ( <
-                                button onClick = { this.onExpireAll } style = { { width: '20px', background: "red" } } >
+                                button onClick = { this.onExpireAll } style = { { width: '20px', background: "red" } } > Expire All Less Than Zero
 
 
 
@@ -180,15 +178,21 @@ class PersonList extends React.Component {
                     },
                     cell: {
                         formatters: [
-                            (value, { rowData }) => ( <
-                                button className = "warning remove-button" >
+                            (value, { rowIndex,rowData }) => (  
+
+                            <
+                        
+                                button  className = "warning remove-button" onClick = {
+                                    (event) => this.onExpire(rowIndex, rowData.id_page, event) } >
+
+
                                 <
                                 div className = "button-text" >
-                                Expire <
+                                Expire| <
                                 /div> <
                                 div className = "icon" >
                                 <
-                                i className = "fa fa-remove" > < /i>
+                                i className = "fa fa-history" > < /i>
 
                                 <
                                 /div> <
@@ -209,15 +213,24 @@ class PersonList extends React.Component {
                     cell: {
                         formatters: [
                             
-                            (value, { rowIndex, rowData }) => ( <
-                                button className = "error"
-
-                                onClick = {
-                                    () => this.onExpire(rowIndex, rowData.id_page) } style = { { cursor: 'pointer' } } > Remove
-
-
-
+                            (value, { rowIndex, rowData }) => (<button onClick = {
+                                    () => this.onRemove(rowIndex, rowData.id_page) }     >
+    
+                                
+<
+                                div className = "button-text" >
+                                Remove| <
+                                /div> <
+                                div className = "icon" >
                                 <
+                                i className = "fa fa-history" > < /i>
+
+                                
+
+                                  <
+                                /div>   
+                                     
+                               <
                                 /button>
                             )
                         ]
@@ -265,6 +278,9 @@ class PersonList extends React.Component {
         this.onSelectRow = this.onSelectRow.bind(this);
         this.getSelectedRowIndex = this.getSelectedRowIndex.bind(this);
 
+        this.onSelectRow = this.onSelectRow.bind(this);
+        this.getSelectedRowIndex = this.getSelectedRowIndex.bind(this);
+
     }
 
 
@@ -295,7 +311,7 @@ class PersonList extends React.Component {
         });
 
         var filteredTimeRow = rows.filter((x, i, arr) => {
-            return moment(x.page_archivedown, "M/D/YYYY h:mm:ss A").startOf('day').diff(today.startOf('day'), 'days') < 0
+            return moment(x.page_archivedown, "M/D/YYYY h:mm:ss A").startOf('day').diff(today.startOf('day'), 'days') <= 0
 
                 &&
                 x.id_page;
@@ -303,11 +319,11 @@ class PersonList extends React.Component {
 
 
 
-        var newfiltered = [];
+        var selectedId = [];
 
         for (var key in filtered) {
             if (filtered.hasOwnProperty(key)) {
-                newfiltered.push(filtered[key]["id_page"]);
+                selectedId.push(filtered[key]["id_page"]);
             }
         }
 
@@ -323,6 +339,24 @@ class PersonList extends React.Component {
 
         var buttonStyle = {
             margin: "10px 10px 10px 0"
+        };
+
+        var divOneStyle = {
+            fontSize: "18px",
+            color:"white",
+            fontWeight:900,
+            float:"left",
+            display:"inline"
+
+        };
+
+          var divTwoStyle = {
+            fontSize: "18px",
+            color:"white",
+            fontWeight:900,
+            float:"right",
+            display:"inline"
+
         };
 
        
@@ -346,12 +380,8 @@ class PersonList extends React.Component {
             <
             Table.Header
 
-            style = {
-                {
-                    backgroundImage: "url(https://www.transparenttextures.com/patterns/cubes.png)",
-                    backgroundRepeat: "repeat"
-                }
-            }
+            
+            
             />
 
 
@@ -365,18 +395,28 @@ class PersonList extends React.Component {
 
             onRow = { this.onRow }
 
-            /> <
+            /> 
+
+            <
             tfoot  >
-            
-            Total Pages: { this.state.rows.length }
 
-            Pages to Expire: { filteredAllExpiredID.length } 
-             
-             
-            Selected{newfiltered.length  }
-             {console.log(newfiltered)}        
+
+            <div style = {divOneStyle}>
+
+            Total Pages: { this.state.rows.length + " "}
+
+            <br />
+
+            Pages to Expire: { filteredAllExpiredID.length + " "} 
+
+            <br />
+
+            Selected: {selectedId.length + " " }
+                    
            
+            </div>
 
+            <div style = {divTwoStyle}>
             <
             button className = "btn btn-default"
             style = { buttonStyle } onClick = {
@@ -388,37 +428,42 @@ class PersonList extends React.Component {
 
                 }
             } >
-            Select All < /button> <
+           
+            Select All < /button>
+
+             <
             button className = "btn btn-default"
             style = { buttonStyle } onClick = {
+                
+
                 () => {
-
-
-                    this.setState(compose(select.rows(row => !row), select.none)(rows))
-
-
-                }
+                            this.setState(compose(select.rows(row => !row), select.none)(rows))
+                    }
             } >
-            Select None < /button> <
+            
+            Select None < /button> 
+
+            <
             button className = "btn btn-default"
             style = { buttonStyle } onClick = {
 
-                this.onExpireAll
+                this.onExpireAll1
             } >
+            
             Expire All < /button>
 
              <
             button className = "btn btn-default"
             style = { buttonStyle } onClick = {
-                () => {
+               this.onExpireAll
 
 
-                    this.setState(compose(select.rows(row => row), select.all)(rows))
-
-
-                }
+                
             } >
-            Expire Selected < /button> <
+            
+            Expire Selected < /button> 
+
+            <
             button className = "btn btn-default"
             style = { buttonStyle } onClick = {
                 () => {
@@ -429,8 +474,10 @@ class PersonList extends React.Component {
 
                 }
             } >
+            Remove Selected
+            </button>
 
-
+        </div>
 
              <
             /tfoot>
@@ -448,9 +495,39 @@ class PersonList extends React.Component {
   
 
     onRow(row, { rowIndex }) {
+
+var archiveDownDayFormatted = moment(this.state.rows[rowIndex].page_archivedown, "M/D/YYYY h:mm:ss A");
+   
+    var archiveDays = archiveDownDayFormatted.startOf('day').diff(today.startOf('day'), 'days');
+   
+    var warningcolor;
+    switch(true){
+      case (archiveDays > 0):
+        warningcolor = 'inherit';
+        break;
+      case (archiveDays <= 0 && archiveDays >= -5):
+        warningcolor = 'yellow';
+        break;
+      case (archiveDays <= -5 && archiveDays >= -10):
+        warningcolor = 'orange';
+        break;
+      case (archiveDays <= -10):
+        warningcolor = 'red';
+        break;
+      default:
+        warningcolor = 'inherit';
+        break;
+    }
+
+
+
+
         return {
+
+
+             style:{backgroundColor: warningcolor},
             className: classnames(
-                rowIndex % 2 ? 'odd-row' : 'even-row',
+                
                 row.selected && 'selected-row'
             ),
             onClick: () => this.onSelectRow(rowIndex)
@@ -466,6 +543,7 @@ class PersonList extends React.Component {
         });
     }
 
+
     getSelectedRowIndex(selectedRows) {
         return findIndex(this.state.rows, {
             id: selectedRows[0] && selectedRows[0].id_page
@@ -473,11 +551,15 @@ class PersonList extends React.Component {
     }
 
 
-    onExpire(index, id) {
+    onExpire(index, id,event) {
         const rows = cloneDeep(this.state.rows);
         const idx = findIndex(rows, { id });
+        
 
+        
 
+        rows.splice(index, 1);     
+        this.setState({ rows });
         console.log(index);
         console.log(idx);
         console.log(id);
@@ -491,11 +573,12 @@ class PersonList extends React.Component {
         })
 
 
-        rows.splice(index, 1);
-
-
-
+       rows.splice(index, 1);     
         this.setState({ rows });
+
+        event.stopPropagation();
+
+        
     }
 
     onExpireAll(index, id) {
@@ -507,11 +590,12 @@ class PersonList extends React.Component {
 
 
         var filteredTimeRow2 = rows.filter((x, i, arr) => {
-            return moment(x.page_archivedown, "M/D/YYYY h:mm:ss A").startOf('day').diff(today.startOf('day'), 'days') < 0
+            return moment(x.page_archivedown, "M/D/YYYY h:mm:ss A").startOf('day').diff(today.startOf('day'), 'days') <= 0
 
                 &&
                 x.id_page;
         });
+        
         var filteredAllExpiredID2 = [];
 
         for (var key in filteredTimeRow2) {
@@ -521,11 +605,23 @@ class PersonList extends React.Component {
         }
 
 
+
+
         console.log(index);
         console.log(idx);
         console.log(id);
         console.log(filteredTimeRow2);
         console.log(filteredAllExpiredID2);
+
+        
+ $.ajax({
+            data: { action: 'expire', pages: filteredAllExpiredID2 },
+            type: 'POST',
+            dataType: 'json',
+            traditional: true
+        })
+
+
 
 
     }
@@ -565,6 +661,91 @@ class PersonList extends React.Component {
         console.log(index);
         console.log(idx);
         console.log(id);
+
+
+        $.ajax({
+            data: { action: 'remove', pages: [id] },
+            type: 'POST',
+            dataType: 'json',
+            traditional: true
+        })
+
+
+        rows.splice(index, 1);
+
+
+
+        this.setState({ rows });
+    }
+    
+    expireSelected(index, id) {
+
+        const rows = cloneDeep(this.state.rows);
+        const idx = findIndex(rows, { id });
+
+
+
+
+        var filtered2 = rows.filter((x, i, arr) => {
+            return x.selected && x.id_page;
+        });
+
+        
+        var selectedId2 = [];
+
+        for (var key in filtered2) {
+            if (filtered2.hasOwnProperty(key)) {
+                selectedId2.push(filtered2[key]["id_page"]);
+            }
+        }
+
+
+        console.log(index);
+        console.log(idx);
+        console.log(id);
+        console.log(filtered2);
+        console.log(selectedId2);
+
+
+        $.ajax({
+            data: { action: 'expire', pages: [id] },
+            type: 'POST',
+            dataType: 'json',
+            traditional: true
+        })
+
+
+        rows.splice(index, 1);
+
+
+
+        this.setState({ rows });
+    }
+    
+    removeSelected(index, id) {
+
+        const rows = cloneDeep(this.state.rows);
+        const idx = findIndex(rows, { id });
+        
+
+        var filtered2 = rows.filter((x, i, arr) => {
+            return x.selected && x.id_page;
+        });
+
+        
+        var selectedId2 = [];
+
+        for (var key in filtered2) {
+            if (filtered2.hasOwnProperty(key)) {
+                selectedId2.push(filtered2[key]["id_page"]);
+            }
+        }
+
+        console.log(index);
+        console.log(idx);
+        console.log(id);
+        console.log(filtered2);
+        console.log(selectedId2);
 
 
         $.ajax({

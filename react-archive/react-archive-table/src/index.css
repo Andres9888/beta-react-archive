@@ -93,9 +93,6 @@ thead{border-bottom-style: inset;}
 .remove-button.success .icon, .remove-button:hover .icon {
   width: 100%;
 }
-.remove-button.success .icon .fa, .remove-button:hover .icon .fa {
-  font-size: 45px;
-}
 .remove-button.success {
   background-color: #27ae60;
 }
