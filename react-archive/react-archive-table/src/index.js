@@ -605,8 +605,6 @@ var archiveDownDayFormatted = moment(this.state.rows[rowIndex].page_archivedown,
         }
 
 
-
-
         console.log(index);
         console.log(idx);
         console.log(id);
@@ -621,8 +619,8 @@ var archiveDownDayFormatted = moment(this.state.rows[rowIndex].page_archivedown,
             traditional: true
         })
 
-
-
+rows.splice(0, filteredAllExpiredID2.length); 
+this.setState({ rows });
 
     }
 
