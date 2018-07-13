@@ -171,7 +171,7 @@ class PersonList extends React.Component {
                         formatters: [
 
                             name => ( <
-                                button onClick = { this.onExpireAll } style = { { width: '20px', background: "red" } } > Expire All Less Than Zero
+                                button onClick = { this.onExpireAll } style = { { width: '120px', background: "red" } } > Expire All Less Than Zero
 
 
 
@@ -420,7 +420,7 @@ class PersonList extends React.Component {
 
 
             
-<Example/>
+			<Example/>
             <div style = {divOneStyle}>
 			
             Total Pages: { this.state.rows.length + " "}
