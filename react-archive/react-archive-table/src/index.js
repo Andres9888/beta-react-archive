@@ -51,7 +51,7 @@ class PersonList extends React.Component {
                     property: 'id_page',
                     props: {
                         style: {
-                            width: "100%",
+                            width: "25%",
                             textAlign: "right"
                         }
                     },
@@ -62,7 +62,7 @@ class PersonList extends React.Component {
                         ]
                     },
 
-                    width: "100%"
+                    width: "25%"
 
                 },
                 {
@@ -70,7 +70,7 @@ class PersonList extends React.Component {
                     props: {
                         style: {
                             minWidth: 300,
-                            width: "100%",
+                            width: "25%",
                             textTransform: 'uppercase'
                         }
                     },
@@ -80,13 +80,13 @@ class PersonList extends React.Component {
 
                         ]
                     },
-                    width: "100%"
+                    width: "25%"
                 },
                 {
                     property: 'conference_short',
                     props: {
                         style: {
-                            width: "100%",
+                            width: "50%",
                             textTransform: 'uppercase',
                         }
                     },
@@ -96,14 +96,14 @@ class PersonList extends React.Component {
 
                         ]
                     },
-                    width: "100%"
+                    width: "50%"
                 },
                 {
                     property: 'company_name',
                     props: {
                         style: {
                             minWidth: 300,
-                            width: "100%"
+                            width: "50%"
                         }
                     },
                     header: {
@@ -112,7 +112,7 @@ class PersonList extends React.Component {
 
                         ]
                     },
-                    width: "100%"
+                    width: "50%"
                 },
 
                 {
@@ -162,7 +162,7 @@ class PersonList extends React.Component {
 
                         ]
                     },
-                    width: "100%"
+                    width: "50%"
                 },
                 {
 
@@ -171,7 +171,7 @@ class PersonList extends React.Component {
                         formatters: [
 
                             name => ( <
-                                button onClick = { this.onExpireAll } style = { { width: '120px', background: "red" } } > Expire All Less Than Zero
+                                button onClick = { this.onExpireAll } style = { { width: '120px', background: "red" } } > Expire All Less Than or Equal to Zero
 
 
 
@@ -197,7 +197,7 @@ class PersonList extends React.Component {
                     cell: {
                         formatters: [
                             (value, { rowIndex,rowData }) => (  
-
+<div>
                             <
                         
                                 button  className = "warning remove-button" onClick = {
@@ -215,23 +215,8 @@ class PersonList extends React.Component {
                                 <
                                 /div> <
                                 /button>
-                            )
-                        ]
-                    }
 
-
-                },
-                {
-                    props: {
-                        style: {
-                            width: 125,
-                            minWidth: 50
-                        }
-                    },
-                    cell: {
-                        formatters: [
-                            
-                            (value, { rowIndex, rowData }) => (<button onClick = {
+                                <button onClick = {
                                     () => this.onRemove(rowIndex, rowData.id_page) }     >
     
                                 
@@ -250,23 +235,8 @@ class PersonList extends React.Component {
                                      
                                <
                                 /button>
-                            )
-                        ]
-                    }
 
-
-                },
-                {
-                    props: {
-                        style: {
-                            width: 125,
-                            minWidth: 50
-                        }
-                    },
-                    cell: {
-                        formatters: [
-                            
-                            (value, { rowData }) => ( <
+                                 <
                                 button className = "success" >
 
                                 <
@@ -276,10 +246,19 @@ class PersonList extends React.Component {
 
                                 <
                                 /button>
+                                </div>
+
+
+
+
+
                             )
                         ]
                     }
+
+
                 }
+               
             ]
 
         };
@@ -526,13 +505,13 @@ var archiveDownDayFormatted = moment(this.state.rows[rowIndex].page_archivedown,
         warningcolor = 'inherit';
         break;
       case (archiveDays <= 0 && archiveDays >= -5):
-        warningcolor = 'yellow';
+        warningcolor = '#FFFF66';
         break;
       case (archiveDays <= -5 && archiveDays >= -10):
-        warningcolor = 'orange';
+        warningcolor = '#fa6800';
         break;
       case (archiveDays <= -10):
-        warningcolor = 'red';
+        warningcolor = '#f44336';
         break;
       default:
         warningcolor = 'inherit';
