@@ -21,6 +21,7 @@
     "react-bootstrap-table-next": "^0.1.5",
     "react-dom": "^16.2.0",
     "react-edit": "^6.4.0",
+    "react-responsive": "^4.1.0",
     "react-scripts": "1.1.1",
     "reactabular-resizable": "^8.12.0",
     "reactabular-sticky": "^8.12.0",
