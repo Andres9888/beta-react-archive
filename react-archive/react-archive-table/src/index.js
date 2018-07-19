@@ -51,7 +51,7 @@ class PersonList extends React.Component {
                     property: 'id_page',
                     props: {
                         style: {
-                            width: "25%",
+                            width: "20%",
                             textAlign: "right"
                         }
                     },
@@ -62,15 +62,15 @@ class PersonList extends React.Component {
                         ]
                     },
 
-                    width: "25%"
+                    width: "20%"
 
                 },
                 {
                     property: 'page_short',
                     props: {
                         style: {
-                            minWidth: 300,
-                            width: "25%",
+                            
+                            width: "20%",
                             textTransform: 'uppercase'
                         }
                     },
@@ -80,13 +80,13 @@ class PersonList extends React.Component {
 
                         ]
                     },
-                    width: "25%"
+                    width: "20%"
                 },
                 {
                     property: 'conference_short',
                     props: {
                         style: {
-                            width: "50%",
+                            width: "25%",
                             textTransform: 'uppercase',
                         }
                     },
@@ -96,14 +96,14 @@ class PersonList extends React.Component {
 
                         ]
                     },
-                    width: "50%"
+                    width: "25%"
                 },
                 {
                     property: 'company_name',
                     props: {
                         style: {
-                            minWidth: 300,
-                            width: "50%"
+                            
+                            width: "25%"
                         }
                     },
                     header: {
@@ -112,7 +112,7 @@ class PersonList extends React.Component {
 
                         ]
                     },
-                    width: "50%"
+                    width: "25%"
                 },
 
                 {
@@ -120,7 +120,7 @@ class PersonList extends React.Component {
                     property: 'page_archivedown',
                     props: {
                         style: {
-                            width: "125px",
+                            width: "15%",
                             textAlign: "right"
                         }
                     },
@@ -128,7 +128,7 @@ class PersonList extends React.Component {
                         label: 'Archive Down:(Day)',
                         name: "archivedays",
                         formatters: [
-
+                        
                         ]
                     },
                     cell: {
@@ -141,6 +141,8 @@ class PersonList extends React.Component {
                                 { moment(rowData.page_archivedown, "M/D/YYYY h:mm:ss A").startOf('day').diff(today.startOf('day'), 'days') } 
                                 
                                 </div>
+
+                                
                             )
                         ]
                     }
@@ -151,7 +153,7 @@ class PersonList extends React.Component {
                     property: 'page_archivedown',
                     props: {
                         style: {
-                            width: "125px",
+                            width: "15%",
                             textAlign: "right"
                         }
                     },
@@ -159,10 +161,26 @@ class PersonList extends React.Component {
                     header: {
                         label: '(Date)',
                         formatters: [
-
-                        ]
+                            (label, { rowData}) => <Desktop><div>{label}</div></Desktop>]
+                        
                     },
-                    width: "50%"
+                    width: "15%",
+                
+                cell: {
+
+                        formatters: [
+                            (value, { rowData }) => (
+<Desktop>
+                                <div> 
+                                
+                                { value}
+                                
+                                </div>
+
+                                </Desktop>
+                            )
+                        ]
+                    }
                 },
                 {
 
@@ -190,7 +208,7 @@ class PersonList extends React.Component {
                     props: {
                         style: {
 
-                            width: 125,
+                            width: "25%",
                             minWidth: 50
                         }
                     },
