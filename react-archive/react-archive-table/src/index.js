@@ -18,12 +18,16 @@ import classnames from 'classnames';
 
 var moment = require('moment');
 var today = moment();
+var mobileStyle = {
+ display: "none",
+};
 
-
-const Desktop = props => <Responsive {...props} minWidth={992} />;
+const Desktop = props => <Responsive {...props}  minWidth={992} />;
 const Tablet = props => <Responsive {...props} minWidth={768} maxWidth={991} />;
 const Mobile = props => <Responsive {...props} maxWidth={767} />;
 const Default = props => <Responsive {...props} minWidth={768} />;
+
+
 
 
 const Example = () => (
@@ -161,7 +165,7 @@ class PersonList extends React.Component {
                     header: {
                         label: '(Date)',
                         formatters: [
-                            (label, { rowData}) => <Desktop><div>{label}</div></Desktop>]
+                            (label, { rowData}) => <div><Desktop>{label}</Desktop><Tablet style={mobileStyle}></Tablet><Mobile style={mobileStyle}></Mobile></div>]
                         
                     },
                     width: "15%",
@@ -170,14 +174,16 @@ class PersonList extends React.Component {
 
                         formatters: [
                             (value, { rowData }) => (
-<Desktop>
+
                                 <div> 
-                                
+                                <Desktop>
                                 { value}
-                                
+                                </Desktop>
+                                <Tablet style={mobileStyle}></Tablet>
+                                <Mobile style={mobileStyle}></Mobile>
                                 </div>
 
-                                </Desktop>
+                                
                             )
                         ]
                     }
