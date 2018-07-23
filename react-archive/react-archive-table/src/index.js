@@ -20,6 +20,7 @@ var moment = require('moment');
 var today = moment();
 var mobileStyle = {
  display: "none",
+
 };
 
 const Desktop = props => <Responsive {...props}  minWidth={992} />;
@@ -165,7 +166,7 @@ class PersonList extends React.Component {
                     header: {
                         label: '(Date)',
                         formatters: [
-                            (label, { rowData}) => <div><Desktop>{label}</Desktop><Tablet style={mobileStyle}></Tablet><Mobile style={mobileStyle}></Mobile></div>]
+                            ]
                         
                     },
                     width: "15%",
@@ -173,18 +174,10 @@ class PersonList extends React.Component {
                 cell: {
 
                         formatters: [
-                            (value, { rowData }) => (
-
-                                <div> 
-                                <Desktop>
-                                { value}
-                                </Desktop>
-                                <Tablet style={mobileStyle}></Tablet>
-                                <Mobile style={mobileStyle}></Mobile>
-                                </div>
+                            
 
                                 
-                            )
+                            
                         ]
                     }
                 },
@@ -234,13 +227,13 @@ class PersonList extends React.Component {
                                 /div> <
                                 div className = "icon" >
                                 <
-                                i className = "fa fa-history" > < /i>
+                                i className = "fa history" > < /i>
 
                                 <
                                 /div> <
                                 /button>
 
-                                <button onClick = {
+                                <button className ="remove-button" onClick = {
                                     () => this.onRemove(rowIndex, rowData.id_page) }     >
     
                                 
@@ -250,7 +243,7 @@ class PersonList extends React.Component {
                                 /div> <
                                 div className = "icon" >
                                 <
-                                i className = "fa fa-history" > < /i>
+                                i className = "fa fa-times-circle-o" > < /i>
 
                                 
 
@@ -268,6 +261,11 @@ class PersonList extends React.Component {
                                 View Page <
                                 /a>
 
+                                <
+                                div className = "icon" >
+                                <
+                                i className = "fa fa-eye" > < /i>
+                                </div>
                                 <
                                 /button>
                                 </div>
