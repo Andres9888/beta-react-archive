@@ -1,91 +1,52 @@
-//import App from './App';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-
 import $ from 'jquery';
 import * as Table from 'reactabular-table';
 import 'picnic/picnic.css';
 import { cloneDeep, findIndex } from 'lodash';
-
-import MediaQuery from 'react-responsive';
-import Responsive from 'react-responsive';
-
 import * as select from 'selectabular';
 import { compose } from 'redux';
 import classnames from 'classnames';
 
 var moment = require('moment');
 var today = moment();
-var mobileStyle = {
- display: "none",
-
-};
-
-const Desktop = props => <Responsive {...props}  minWidth={992} />;
-const Tablet = props => <Responsive {...props} minWidth={768} maxWidth={991} />;
-const Mobile = props => <Responsive {...props} maxWidth={767} />;
-const Default = props => <Responsive {...props} minWidth={768} />;
-
-
-
-
-const Example = () => (
-  <div>
-    <Desktop>Desktop or laptop</Desktop>
-    <Tablet>Tablet</Tablet>
-    <Mobile>Mobile</Mobile>
-    <Default>Not mobile (desktop or laptop or tablet)</Default>
-  </div>
-);
-
-
 
 class PersonList extends React.Component {
-
     constructor(props) {
         super(props);
-
         this.state = {
-
             rows: [],
             selectedRows: [],
-
             columns: [{
                     property: 'id_page',
                     props: {
                         style: {
-                            width: "20%",
+                            width: "15%",
                             textAlign: "right"
                         }
                     },
                     header: {
                         label: '#ID',
                         formatters: [
-
                         ]
                     },
-
-                    width: "20%"
-
+                    width: "15%"
                 },
                 {
                     property: 'page_short',
                     props: {
                         style: {
-                            
-                            width: "20%",
+                            width: "12%",
                             textTransform: 'uppercase'
                         }
                     },
                     header: {
                         label: 'Page Short',
                         formatters: [
-
                         ]
                     },
-                    width: "20%"
+                    width: "12%"
                 },
                 {
                     property: 'conference_short',
@@ -98,7 +59,6 @@ class PersonList extends React.Component {
                     header: {
                         label: 'Conference',
                         formatters: [
-
                         ]
                     },
                     width: "25%"
@@ -107,21 +67,17 @@ class PersonList extends React.Component {
                     property: 'company_name',
                     props: {
                         style: {
-                            
                             width: "25%"
                         }
                     },
                     header: {
                         label: 'Company Name',
                         formatters: [
-
                         ]
                     },
                     width: "25%"
                 },
-
                 {
-
                     property: 'page_archivedown',
                     props: {
                         style: {
@@ -132,12 +88,10 @@ class PersonList extends React.Component {
                     header: {
                         label: 'Archive Down:(Day)',
                         name: "archivedays",
-                        formatters: [
-                        
+                        formatters: [                       
                         ]
                     },
                     cell: {
-
                         formatters: [
                             (value, { rowData }) => (
 
@@ -146,7 +100,6 @@ class PersonList extends React.Component {
                                 { moment(rowData.page_archivedown, "M/D/YYYY h:mm:ss A").startOf('day').diff(today.startOf('day'), 'days') } 
                                 
                                 </div>
-
                                 
                             )
                         ]
@@ -217,23 +170,26 @@ class PersonList extends React.Component {
 <div>
                             <
                         
-                                button  className = "warning remove-button" onClick = {
+                                button className = "warning remove-button inline" style = { {     border: "1px outset",
+    marginRight: "3px",
+    marginBottom: "3px", } } onClick = {
                                     (event) => this.onExpire(rowIndex, rowData.id_page, event) } >
 
-
                                 <
-                                div className = "button-text" >
+                                div className = "button-text "  >
                                 Expire| <
                                 /div> <
                                 div className = "icon" >
                                 <
-                                i className = "fa history" > < /i>
+                                i className = "fa fa-history" > < /i>
 
                                 <
                                 /div> <
                                 /button>
 
-                                <button className ="remove-button" onClick = {
+                                <button className ="remove-button inline" style = { {     border: "1px outset",
+    marginRight: "3px",
+    marginBottom: "3px", } } onClick = {
                                     () => this.onRemove(rowIndex, rowData.id_page) }     >
     
                                 
@@ -254,11 +210,13 @@ class PersonList extends React.Component {
                                 /button>
 
                                  <
-                                button className = "success" >
+                                button className = "remove-button success inline" style = { {     border: "1px outset",
+    marginRight: "3px",
+    marginBottom: "3px", } }>
 
                                 <
                                 a href = { "http://wsw.com/webcast/" + rowData.conference_short + '/' + rowData.page_short } target = "_blank" >
-                                View Page <
+                                View<
                                 /a>
 
                                 <
@@ -419,9 +377,7 @@ class PersonList extends React.Component {
             <
             tfoot  >
 
-
-            
-			<Example/>
+            			
             <div style = {divOneStyle}>
 			
             Total Pages: { this.state.rows.length + " "}
@@ -443,9 +399,7 @@ class PersonList extends React.Component {
             style = { buttonStyle } onClick = {
                 () => {
 
-
                     this.setState(compose(select.rows(row => row), select.all)(rows))
-
 
                 }
             } >
@@ -477,8 +431,6 @@ class PersonList extends React.Component {
             button className = "btn btn-default"
             style = { buttonStyle } onClick = {
                this.onExpireAll
-
-
                 
             } >
             
@@ -541,8 +493,6 @@ var archiveDownDayFormatted = moment(this.state.rows[rowIndex].page_archivedown,
     }
 
 
-
-
         return {
 
 
@@ -575,9 +525,7 @@ var archiveDownDayFormatted = moment(this.state.rows[rowIndex].page_archivedown,
     onExpire(index, id,event) {
         const rows = cloneDeep(this.state.rows);
         const idx = findIndex(rows, { id });
-        
-
-        
+                
 
         rows.splice(index, 1);     
         this.setState({ rows });
@@ -603,8 +551,6 @@ var archiveDownDayFormatted = moment(this.state.rows[rowIndex].page_archivedown,
     }
 
     onExpireAll(index, id) {
-
-
 
         const rows = cloneDeep(this.state.rows);
         const idx = findIndex(rows, { id });
@@ -644,7 +590,6 @@ rows.splice(0, filteredAllExpiredID2.length);
 this.setState({ rows });
 
     }
-
 
 
     onRemove(index, id) {
