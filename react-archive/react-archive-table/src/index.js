@@ -37,7 +37,7 @@ class PersonList extends React.Component {
                     property: 'page_short',
                     props: {
                         style: {
-                            width: "12%",
+                            width: "16%",
                             textTransform: 'uppercase'
                         }
                     },
@@ -46,13 +46,13 @@ class PersonList extends React.Component {
                         formatters: [
                         ]
                     },
-                    width: "12%"
+                    width: "16%"
                 },
                 {
                     property: 'conference_short',
                     props: {
                         style: {
-                            width: "25%",
+                            width: "28%",
                             textTransform: 'uppercase',
                         }
                     },
@@ -61,7 +61,7 @@ class PersonList extends React.Component {
                         formatters: [
                         ]
                     },
-                    width: "25%"
+                    width: "28%"
                 },
                 {
                     property: 'company_name',
@@ -141,18 +141,9 @@ class PersonList extends React.Component {
                         formatters: [
 
                             name => ( <
-                                button onClick = { this.onExpireAll } style = { { width: '120px', background: "red" } } > Expire All Less Than or Equal to Zero
-
-
-
-
-
-                                <
-                                /button>
+                                button onClick = { this.onExpireAll } style = { { width: '120px', background: "red", boxShadow: '0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12)' } } > Expire All Less Than or Equal to Zero
+                                </button>
                             )
-
-
-
                         ]
 
 
@@ -160,7 +151,7 @@ class PersonList extends React.Component {
                     props: {
                         style: {
 
-                            width: "25%",
+                            width: "30%",
                             minWidth: 50
                         }
                     },
@@ -170,9 +161,9 @@ class PersonList extends React.Component {
 <div>
                             <
                         
-                                button className = "warning remove-button inline" style = { {     border: "1px outset",
-    marginRight: "3px",
-    marginBottom: "3px", } } onClick = {
+                                button className = "warning remove-button inline" style = { {border: "1px #f5f5f5 solid",
+    marginRight: "18px",
+    marginBottom: "3px",boxShadow: '0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12)' } } onClick = {
                                     (event) => this.onExpire(rowIndex, rowData.id_page, event) } >
 
                                 <
@@ -187,9 +178,9 @@ class PersonList extends React.Component {
                                 /div> <
                                 /button>
 
-                                <button className ="remove-button inline" style = { {     border: "1px outset",
-    marginRight: "3px",
-    marginBottom: "3px", } } onClick = {
+                                <button className ="remove-button inline" style = { {border: "1px #f5f5f5 solid",
+    marginRight: "18px",
+    marginBottom: "3px",boxShadow: '0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12)' } } onClick = {
                                     () => this.onRemove(rowIndex, rowData.id_page) }     >
     
                                 
@@ -210,9 +201,9 @@ class PersonList extends React.Component {
                                 /button>
 
                                  <
-                                button className = "remove-button success inline" style = { {     border: "1px outset",
-    marginRight: "3px",
-    marginBottom: "3px", } }>
+                                button className = "remove-button success inline" style = { {border: "1px #f5f5f5 solid",
+    marginRight: "1px",
+    marginBottom: "3px",boxShadow: '0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12)' } }>
 
                                 <
                                 a href = { "http://wsw.com/webcast/" + rowData.conference_short + '/' + rowData.page_short } target = "_blank" >

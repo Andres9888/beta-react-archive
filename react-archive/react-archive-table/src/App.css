@@ -1,3 +1,44 @@
+@media all and (max-width: 1199px) {  } 
+@media all and (max-width: 991px) { 
+ th:nth-child(6){
+
+display:none;
+width:0%;
+  }
+
+
+  td:nth-child(6){
+
+display:none;
+width:0%;
+  }
+
+
+  } 
+
+@media all and (max-width: 768px) { 
+
+th:nth-child(6){
+
+display:none;
+width:0%;
+  }
+
+
+  td:nth-child(6){
+
+display:none; } 
+width:0%;
+}
+
+
+
+@media all and (max-width: 575px) { td:nth-child(6){
+
+display:none;
+width:0%; }
+}
+
 thead{border-bottom-style: inset;}
 
 .App {
@@ -122,4 +163,5 @@ thead{border-bottom-style: inset;}
 .button:active {
   opacity: 1;
 }
+
 
