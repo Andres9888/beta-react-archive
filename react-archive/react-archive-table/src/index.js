@@ -186,7 +186,7 @@ class PersonList extends React.Component {
                                 
 <
                                 div className = "button-text" >
-                                Remove| <
+                                Remove <
                                 /div> <
                                 div className = "icon" >
                                 <
@@ -210,11 +210,7 @@ class PersonList extends React.Component {
                                 View<
                                 /a>
 
-                                <
-                                div className = "icon" >
-                                <
-                                i className = "fa fa-eye" > < /i>
-                                </div>
+                               
                                 <
                                 /button>
                                 </div>
@@ -464,6 +460,7 @@ var archiveDownDayFormatted = moment(this.state.rows[rowIndex].page_archivedown,
    
     var archiveDays = archiveDownDayFormatted.startOf('day').diff(today.startOf('day'), 'days');
    
+    var textColor;
     var warningcolor;
     switch(true){
       case (archiveDays > 0):
@@ -474,9 +471,11 @@ var archiveDownDayFormatted = moment(this.state.rows[rowIndex].page_archivedown,
         break;
       case (archiveDays <= -5 && archiveDays >= -10):
         warningcolor = '#fa6800';
+        textColor = 'white';
         break;
       case (archiveDays <= -10):
         warningcolor = '#f44336';
+         textColor = 'white';
         break;
       default:
         warningcolor = 'inherit';
@@ -487,7 +486,14 @@ var archiveDownDayFormatted = moment(this.state.rows[rowIndex].page_archivedown,
         return {
 
 
-             style:{backgroundColor: warningcolor},
+             style:{backgroundColor: warningcolor,
+                    color: textColor
+
+    
+
+             },
+                    
+
             className: classnames(
                 
                 row.selected && 'selected-row'

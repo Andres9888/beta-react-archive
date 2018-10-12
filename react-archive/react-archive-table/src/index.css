@@ -221,7 +221,7 @@ thead{border-bottom-style: inset;}
   width: 100%;
 }
 .remove-button.success {
-  background-color: #27ae60;
+  background-color: #68f24d;
 }
 .remove-button.success .icon .fa-remove {
   display: none;
