@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import './font-awesome-css/font-awesome.css';
 import $ from 'jquery';
 import * as Table from 'reactabular-table';
 import 'picnic/picnic.css';
@@ -382,7 +383,7 @@ class PersonList extends React.Component {
 
             <div style = {divTwoStyle}>
             <
-            button className = "btn btn-default"
+            button className = "btn btn-default footer__button--green"
             style = { buttonStyle } onClick = {
                 () => {
 
@@ -390,11 +391,13 @@ class PersonList extends React.Component {
 
                 }
             } >
+
+            <i class="fa fa-check-circle-o" aria-hidden="true"></i>
            
-            Select All < /button>
+           <div className = "footer__button--off"> Select All </div> < /button>
 
              <
-            button className = "btn btn-default"
+            button className = "btn btn-default footer__button--gray"
             style = { buttonStyle } onClick = {
                 
 
@@ -402,29 +405,29 @@ class PersonList extends React.Component {
                             this.setState(compose(select.rows(row => !row), select.none)(rows))
                     }
             } >
-            
-            Select None < /button> 
 
-            <
-            button className = "btn btn-default"
-            style = { buttonStyle } onClick = {
 
-                this.onExpireAll1
-            } >
+            <i class="fa fa-chain-broken" aria-hidden="true"></i>
             
-            Expire All < /button>
+            <div className = "footer__button--off">
+            Select None
+            </div>
+             < /button> 
 
              <
-            button className = "btn btn-default"
+            button className = "btn btn-default footer__button--orange"
             style = { buttonStyle } onClick = {
                this.onExpireAll
                 
             } >
+            <i class="fa fa-history" aria-hidden="true"></i>
             
-            Expire Selected < /button> 
+<div className = "footer__button--off">
 
+            Expire Selected </div>< /button> 
+    
             <
-            button className = "btn btn-default"
+            button className = "btn btn-default ooter__button--red"
             style = { buttonStyle } onClick = {
                 () => {
 
@@ -434,7 +437,11 @@ class PersonList extends React.Component {
 
                 }
             } >
-            Remove Selected
+            <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+
+<div className = "footer__button--off">
+
+            Remove Selected</div>
             </button>
 
         </div>
