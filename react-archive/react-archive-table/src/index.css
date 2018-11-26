@@ -8,7 +8,7 @@ tfoot{
 @media (max-width: 906px){
 
 tfoot{ 
-    top: 88%;}
+    top: 87%;}
 
 }
 
@@ -52,7 +52,7 @@ width:0%;
 @media all and (max-width: 768px) { 
 
   tfoot{ 
-    top: 88%;}
+    top: 87%;}
 
 th:nth-child(1){
 
@@ -141,11 +141,15 @@ display:none;
     padding-top: 0px;
 }
 
+}
 
 .footer__button--green{
   
   background-color:#cfff00;
-
+      border: 1px solid rgb(245, 245, 245);
+    margin-right: 18px;
+    margin-bottom: 3px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 5px -3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px, rgba(0, 0, 0, 0.12) 0px 3px 14px 2px;
 }
 
 .footer__button--gray{
@@ -153,20 +157,36 @@ display:none;
 
   
   background-color:grey;
+      border: 1px solid rgb(245, 245, 245);
+    margin-right: 18px;
+    margin-bottom: 3px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 5px -3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px, rgba(0, 0, 0, 0.12) 0px 3px 14px 2px;
 }
 
 .footer__button--orange{
   
   background-color:#ff851b;
+      border: 1px solid rgb(245, 245, 245);
+    margin-right: 18px;
+    margin-bottom: 3px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 5px -3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px, rgba(0, 0, 0, 0.12) 0px 3px 14px 2px;
 }
 
 .footer__button--red{
   background-color:#c0392b;
+      border: 1px solid rgb(245, 245, 245);
+    margin-right: 18px;
+    margin-bottom: 3px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 5px -3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px, rgba(0, 0, 0, 0.12) 0px 3px 14px 2px;
   
 }
 
+fa-check-circle-o:before {
 
+font-size: 28px;
+  
 }
+
 
 
 
