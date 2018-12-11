@@ -202,12 +202,13 @@ class PersonList extends React.Component {
                                 /button>
 
                                  <
-                                button className = "remove-button success inline" style = { {border: "1px #f5f5f5 solid",
+                                button onClick={this.handleClick} className = "remove-button success inline" style = { {border: "1px #f5f5f5 solid",
     marginRight: "1px",
     marginBottom: "3px",boxShadow: '0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12)' } }>
 
-                                <
-                                a href = { "http://wsw.com/webcast/" + rowData.conference_short + '/' + rowData.page_short } target = "_blank" >
+                                
+                                < 
+                                a   href = { "http://wsw.com/webcast/" + rowData.conference_short + '/' + rowData.page_short } target = "_blank" >
                                 View<
                                 /a>
 
@@ -245,6 +246,8 @@ class PersonList extends React.Component {
 
         this.onSelectRow = this.onSelectRow.bind(this);
         this.getSelectedRowIndex = this.getSelectedRowIndex.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+
 
     }
 
@@ -427,7 +430,7 @@ class PersonList extends React.Component {
             Expire Selected </div>< /button> 
     
             <
-            button className = "btn btn-default ooter__button--red"
+            button className = "btn btn-default footer__button--red"
             style = { buttonStyle } onClick = {
                 () => {
 
@@ -731,6 +734,12 @@ this.setState({ rows });
         this.setState({ rows });
     }
 
+handleClick(e) {
+    e.stopPropagation();
 }
+}
+
+
+
 
 ReactDOM.render( < PersonList / > , document.getElementById('root'));
