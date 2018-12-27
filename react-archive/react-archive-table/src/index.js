@@ -1,12 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import './font-awesome-css/font-awesome.css';
+
+import './index2.css';
+
+
+import './font-awesome-css/new-font-awesome.css';
+
+
 import $ from 'jquery';
+
 import * as Table from 'reactabular-table';
-import 'picnic/picnic.css';
-import { cloneDeep, findIndex } from 'lodash';
 import * as select from 'selectabular';
+
+import { cloneDeep, findIndex } from 'lodash';
 import { compose } from 'redux';
 import classnames from 'classnames';
 
@@ -208,7 +214,7 @@ class PersonList extends React.Component {
 
                                 
                                 < 
-                                a   href = { "http://wsw.com/webcast/" + rowData.conference_short + '/' + rowData.page_short } target = "_blank" >
+                                a   href = { "http://wsw.com/webcast/" + rowData.conference_short + '/' + rowData.page_short } style = {{}} target = "_blank" >
                                 View<
                                 /a>
 
@@ -246,6 +252,7 @@ class PersonList extends React.Component {
 
         this.onSelectRow = this.onSelectRow.bind(this);
         this.getSelectedRowIndex = this.getSelectedRowIndex.bind(this);
+
         this.handleClick = this.handleClick.bind(this);
 
 
@@ -328,7 +335,6 @@ class PersonList extends React.Component {
         };
 
        
-
 
         return select.byArrowKeys({
             rows,
