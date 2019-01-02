@@ -250,6 +250,8 @@ class PersonList extends React.Component {
         this.onSelectRow = this.onSelectRow.bind(this);
         this.getSelectedRowIndex = this.getSelectedRowIndex.bind(this);
 
+        this.getAllExpired = this.getAllExpired.bind(this);
+
         this.onSelectRow = this.onSelectRow.bind(this);
         this.getSelectedRowIndex = this.getSelectedRowIndex.bind(this);
 
@@ -517,6 +519,18 @@ var archiveDownDayFormatted = moment(this.state.rows[rowIndex].page_archivedown,
             onClick: () => this.onSelectRow(rowIndex)
         };
     }
+
+
+getAllExpired(){
+
+archiveDays
+
+get expired test ...
+
+}
+
+
+
 
     onSelectRow(selectedRowIndex) {
         const { rows } = this.state;
