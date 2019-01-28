@@ -136,25 +136,25 @@ class PersonList extends React.Component {
                                     onClick={() => {
                                         const rows = cloneDeep(this.state.rows);
 
-                                        var filteredTimeRow3 = rows.filter(
-                                            (x, i, arr) => {
-                                                return (
-                                                    moment(
-                                                        x.page_archivedown,
-                                                        "M/D/YYYY h:mm:ss A"
-                                                    )
-                                                        .startOf("day")
-                                                        .diff(
-                                                            today.startOf(
-                                                                "day"
-                                                            ),
-                                                            "days"
-                                                        ) <= 0
-                                                );
-                                            }
-                                        );
+                                        for (let i = 0; i < rows.length; i++) {
+                                            if (
+                                                moment(
+                                                    rows[i]["page_archivedown"],
+                                                    "M/D/YYYY h:mm:ss A"
+                                                )
+                                                    .startOf("day")
+                                                    .diff(
+                                                        today.startOf("day"),
+                                                        "days"
+                                                    ) <= 0
+                                            ) {
+                                                Object.assign(rows[i], {
+                                                    ["selected"]: true
+                                                });
 
-                                        console.log(rows);
+                                                console.log(rows[i]);
+                                            }
+                                        }
 
                                         this.setState({ rows });
                                     }}
@@ -360,7 +360,7 @@ class PersonList extends React.Component {
                         onRow={this.onRow}
                     />
 
-                    <tfoot>
+                    <tfoot id="bottom-footer">
                         <div style={divOneStyle}>
                             Total Pages: {this.state.rows.length + " "}
                             <br />
@@ -682,5 +682,16 @@ class PersonList extends React.Component {
         e.stopPropagation();
     }
 }
+
+var prevScrollpos = window.pageYOffset;
+window.onscroll = function() {
+    var currentScrollPos = window.pageYOffset;
+    if (prevScrollpos > currentScrollPos) {
+        document.getElementById("bottom-footer").style.display = "inherit";
+    } else {
+        document.getElementById("bottom-footer").style.display = "none";
+    }
+    prevScrollpos = currentScrollPos;
+};
 
 ReactDOM.render(<PersonList />, document.getElementById("root"));
