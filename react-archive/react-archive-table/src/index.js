@@ -84,7 +84,7 @@ class PersonList extends React.Component {
                     props: {
                         style: {
                             width: "15%",
-                            textAlign: "right"
+                            textAlign: "left"
                         }
                     },
                     header: {
@@ -113,7 +113,7 @@ class PersonList extends React.Component {
                     props: {
                         style: {
                             width: "15%",
-                            textAlign: "right"
+                            textAlign: "left"
                         }
                     },
 
@@ -284,6 +284,7 @@ class PersonList extends React.Component {
     }
 
     componentDidMount() {
+        
         $.ajax({
             data: { action: "load" },
             type: "POST",
@@ -291,6 +292,16 @@ class PersonList extends React.Component {
         }).done(rows => {
             this.setState({ rows });
         });
+
+        setInterval($.ajax({
+            data: { action: "load" },
+            type: "POST",
+            dataType: "json"
+        }).done(rows => {
+            this.setState({ rows });
+            console.log("30 seconds have passed and everything is updated")
+        }), 30000);    
+
     }
 
     render() {

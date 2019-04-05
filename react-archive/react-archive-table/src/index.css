@@ -1,3 +1,8 @@
+tr:hover {
+    border-style: dashed ridge;
+    border-color: #0074d9;
+  }
+
 .fa-check-circle-o:before {
     
     font-size: 28px !important;
