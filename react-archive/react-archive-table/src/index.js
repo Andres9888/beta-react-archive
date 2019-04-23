@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import "./index2.css";
+import "./index.css";
 
 import "./font-awesome-css/new-font-awesome.css";
 
@@ -21,6 +21,7 @@ class PersonList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            compactMode:true,
             rows: [],
             selectedRows: [],
             columns: [
@@ -96,7 +97,8 @@ class PersonList extends React.Component {
                         formatters: [
                             (value, { rowData }) => (
                                 <div>
-                                    {moment(
+                                    {
+                                        moment(
                                         rowData.page_archivedown,
                                         "M/D/YYYY h:mm:ss A"
                                     )
@@ -158,6 +160,7 @@ class PersonList extends React.Component {
 
                                         this.setState({ rows });
                                     }}
+                                    
                                     style={{
                                         width: "120px",
                                         background: "red",
@@ -165,16 +168,17 @@ class PersonList extends React.Component {
                                             "0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12)"
                                     }}
                                 >
-                                    {" "}
-                                    Select All Less Than or Equal to Zero
+                                    {"Select All < 0"}
+                                    
                                 </button>
+  
+
                             )
                         ]
                     },
                     props: {
                         style: {
                             width: "30%",
-                            minWidth: 50
                         }
                     },
                     cell: {
@@ -187,8 +191,8 @@ class PersonList extends React.Component {
                                             border: "1px #f5f5f5 solid",
                                             marginRight: "18px",
                                             marginBottom: "3px",
-                                            boxShadow:
-                                                "0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12)"
+                                            boxShadow:"0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12)",
+            
                                         }}
                                         onClick={event =>
                                             this.onExpire(
@@ -198,9 +202,7 @@ class PersonList extends React.Component {
                                             )
                                         }
                                     >
-                                        <div className="button-text ">
-                                            Expire|{" "}
-                                        </div>{" "}
+                                        
                                         <div className="icon">
                                             <i className="fa fa-history"> </i>
                                         </div>{" "}
@@ -222,9 +224,7 @@ class PersonList extends React.Component {
                                             )
                                         }
                                     >
-                                        <div className="button-text">
-                                            Remove{" "}
-                                        </div>{" "}
+                                        
                                         <div className="icon">
                                             <i className="fa fa-times-circle-o">
                                                 {" "}
@@ -233,7 +233,7 @@ class PersonList extends React.Component {
                                     </button>
 
                                     <button
-                                        onClick={this.handleClick}
+                                        onClick={this.preventClickPropagation}
                                         className="remove-button success inline"
                                         style={{
                                             border: "1px #f5f5f5 solid",
@@ -280,31 +280,28 @@ class PersonList extends React.Component {
         this.onSelectRow = this.onSelectRow.bind(this);
         this.getSelectedRowIndex = this.getSelectedRowIndex.bind(this);
 
-        this.handleClick = this.handleClick.bind(this);
+        this.preventClickPropagation = this.preventClickPropagation.bind(this);
+
+        this.loadData = this.loadData.bind(this);
+
+           
+
+        
+
+        
     }
+
+
 
     componentDidMount() {
         
-        $.ajax({
-            data: { action: "load" },
-            type: "POST",
-            dataType: "json"
-        }).done(rows => {
-            this.setState({ rows });
-        });
+       
+        this.loadData();
 
-        setInterval($.ajax({
-            data: { action: "load" },
-            type: "POST",
-            dataType: "json"
-        }).done(rows => {
-            this.setState({ rows });
-            console.log("30 seconds have passed and everything is updated")
-        }), 30000);    
-
-    }
-
+       
+}
     render() {
+        
         const { columns, rows, selectedRows } = this.state;
         const selectedRowIndex = this.getSelectedRowIndex(selectedRows);
 
@@ -356,13 +353,18 @@ class PersonList extends React.Component {
             display: "inline"
         };
 
-        return select.byArrowKeys({
-            rows,
-            selectedRowIndex,
-            onSelectRow: this.onSelectRow
-        })(
+
+
+
+
+
+        return (
             <div>
-                <Table.Provider className="primary" columns={columns}>
+                <Table.Provider className="primary" columns={columns}
+    
+            
+
+                    >
                     <Table.Header />
 
                     <Table.Body
@@ -462,7 +464,7 @@ class PersonList extends React.Component {
                     </tfoot>
                 </Table.Provider>
             </div>
-        );
+        )
     }
 
     onRow(row, { rowIndex }) {
@@ -689,11 +691,48 @@ class PersonList extends React.Component {
         this.setState({ rows });
     }
 
-    handleClick(e) {
+    preventClickPropagation(e) {
         e.stopPropagation();
     }
+
+    loadData() {
+$.ajax({
+            data: { action: "load" },
+            type: "POST",
+            dataType: "json"
+        }).done(rows => {
+            this.setState({ rows });
+        });
+
+        console.log("state has been updated");
+
 }
 
+toggleCompactMode (){
+        this.setState({
+            compactMode: !this.state.compactMode,
+            compactModeWidth: 100
+
+            
+        });
+        
+
+    }
+
+}
+
+
+  $( document ).ready(function() {
+ $( ".toggle" ).click(function() {
+    $( ".remove-button" ).toggleClass('compactMode');
+  
+
+
+
+  
+        
+    })
+});
 var prevScrollpos = window.pageYOffset;
 window.onscroll = function() {
     var currentScrollPos = window.pageYOffset;
