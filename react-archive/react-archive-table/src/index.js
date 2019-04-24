@@ -17,13 +17,18 @@ import classnames from "classnames";
 var moment = require("moment");
 var today = moment();
 
+
+
 class PersonList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            compactMode:true,
+     
             rows: [],
             selectedRows: [],
+            
+            // Set Property to display tagged data
+            
             columns: [
                 {
                     property: "id_page",
@@ -97,6 +102,7 @@ class PersonList extends React.Component {
                         formatters: [
                             (value, { rowData }) => (
                                 <div>
+                                    // Convert page_archivedown to Number 
                                     {
                                         moment(
                                         rowData.page_archivedown,
@@ -133,6 +139,8 @@ class PersonList extends React.Component {
                     header: {
                         label: "box",
                         formatters: [
+
+                        // Select all less than equal zero function
                             name => (
                                 <button
                                     onClick={() => {
@@ -264,6 +272,8 @@ class PersonList extends React.Component {
             ]
         };
 
+// binding
+
         this.onRemove = this.onRemove.bind(this);
         this.onRemoveAll = this.onRemoveAll.bind(this);
 
@@ -295,6 +305,7 @@ class PersonList extends React.Component {
 
     componentDidMount() {
         
+       // grab data from database
        
         this.loadData();
 
@@ -355,15 +366,9 @@ class PersonList extends React.Component {
 
 
 
-
-
-
         return (
             <div>
                 <Table.Provider className="primary" columns={columns}
-    
-            
-
                     >
                     <Table.Header />
 
@@ -708,31 +713,12 @@ $.ajax({
 
 }
 
-toggleCompactMode (){
-        this.setState({
-            compactMode: !this.state.compactMode,
-            compactModeWidth: 100
-
-            
-        });
         
 
     }
 
 }
 
-
-  $( document ).ready(function() {
- $( ".toggle" ).click(function() {
-    $( ".remove-button" ).toggleClass('compactMode');
-  
-
-
-
-  
-        
-    })
-});
 var prevScrollpos = window.pageYOffset;
 window.onscroll = function() {
     var currentScrollPos = window.pageYOffset;
