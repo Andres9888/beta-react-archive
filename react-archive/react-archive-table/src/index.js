@@ -98,12 +98,11 @@ class PersonList extends React.Component {
                         name: "archivedays",
                         formatters: []
                     },
-                    // Convert page_archivedown to Number 
                     cell: {
                         formatters: [
                             (value, { rowData }) => (
                                 <div>
-                                    
+                                    // Convert page_archivedown to Number 
                                     {
                                         moment(
                                         rowData.page_archivedown,
@@ -317,31 +316,31 @@ class PersonList extends React.Component {
         const { columns, rows, selectedRows } = this.state;
         const selectedRowIndex = this.getSelectedRowIndex(selectedRows);
 
-        var rowSelectedIDdata = rows.filter(data => {
-            return data.selected && data.id_page;
+        var filtered = rows.filter((x, i, arr) => {
+            return x.selected && x.id_page;
         });
 
-        var expiredRow = rows.filter(data => {
+        var filteredTimeRow = rows.filter((x, i, arr) => {
             return (
-                moment(data.page_archivedown, "M/D/YYYY h:mm:ss A")
+                moment(x.page_archivedown, "M/D/YYYY h:mm:ss A")
                     .startOf("day")
-                    .diff(today.startOf("day"), "days") <= 0 && data.id_page
+                    .diff(today.startOf("day"), "days") <= 0 && x.id_page
             );
         });
 
         var selectedId = [];
 
-        for (var key in rowSelectedIDdata) {
-            if (rowSelectedIDdata.hasOwnProperty(key)) {
-                selectedId.push(rowSelectedIDdata[key]["id_page"]);
+        for (var key in filtered) {
+            if (filtered.hasOwnProperty(key)) {
+                selectedId.push(filtered[key]["id_page"]);
             }
         }
 
         var filteredAllExpiredID = [];
 
-        for (var key in expiredRow) {
-            if (expiredRow.hasOwnProperty(key)) {
-                filteredAllExpiredID.push(expiredRow[key]["id_page"]);
+        for (var key in filteredTimeRow) {
+            if (filteredTimeRow.hasOwnProperty(key)) {
+                filteredAllExpiredID.push(filteredTimeRow[key]["id_page"]);
             }
         }
 
@@ -484,37 +483,36 @@ class PersonList extends React.Component {
             .diff(today.startOf("day"), "days");
 
         var textColor;
-        var warningColor;
-        
+        var warningcolor;
         switch (true) {
             case archiveDays > 0:
-                warningColor = "inherit";
+                warningcolor = "inherit";
                 break;
             case archiveDays <= 0 && archiveDays >= -5:
-                warningColor = "#FFFF66";
+                warningcolor = "#FFFF66";
                 break;
             case archiveDays <= -5 && archiveDays >= -10:
-                warningColor = "#fa6800";
+                warningcolor = "#fa6800";
                 textColor = "white";
                 break;
             case archiveDays <= -10:
-                warningColor = "#f44336";
+                warningcolor = "#f44336";
                 textColor = "white";
                 break;
             default:
-                warningColor = "inherit";
+                warningcolor = "inherit";
                 break;
         }
 
         return {
-            style: { backgroundColor: warningColor, color: textColor },
+            style: { backgroundColor: warningcolor, color: textColor },
 
             className: classnames(row.selected && "selected-row"),
             onClick: () => this.onSelectRow(rowIndex)
         };
     }
 
-
+    getAllExpired() {}
 
     onSelectRow(selectedRowIndex) {
         const { rows } = this.state;
@@ -537,7 +535,6 @@ class PersonList extends React.Component {
 
         rows.splice(index, 1);
         this.setState({ rows });
-        
         console.log(index);
         console.log(idx);
         console.log(id);
@@ -559,11 +556,11 @@ class PersonList extends React.Component {
         const rows = cloneDeep(this.state.rows);
         const idx = findIndex(rows, { id });
 
-        var filteredTimeRow2 = rows.filter(data => {
+        var filteredTimeRow2 = rows.filter((x, i, arr) => {
             return (
-                moment(data.page_archivedown, "M/D/YYYY h:mm:ss A")
+                moment(x.page_archivedown, "M/D/YYYY h:mm:ss A")
                     .startOf("day")
-                    .diff(today.startOf("day"), "days") <= 0 && data.id_page
+                    .diff(today.startOf("day"), "days") <= 0 && x.id_page
             );
         });
 
@@ -635,8 +632,8 @@ class PersonList extends React.Component {
         const rows = cloneDeep(this.state.rows);
         const idx = findIndex(rows, { id });
 
-        var filtered2 = rows.filter(data => {
-            return data.selected && data.id_page;
+        var filtered2 = rows.filter((x, i, arr) => {
+            return x.selected && x.id_page;
         });
 
         var selectedId2 = [];
@@ -669,8 +666,8 @@ class PersonList extends React.Component {
         const rows = cloneDeep(this.state.rows);
         const idx = findIndex(rows, { id });
 
-        var filtered2 = rows.filter(data => {
-            return data.selected && data.id_page;
+        var filtered2 = rows.filter((x, i, arr) => {
+            return x.selected && x.id_page;
         });
 
         var selectedId2 = [];
@@ -718,7 +715,7 @@ $.ajax({
 
         
 
-    
+    }
 
 }
 
